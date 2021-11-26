@@ -46,7 +46,6 @@ export default {
     }
   },
   created(){
-    this.transaction.account.source = ""
     this.$store.dispatch("fetchFreeMoney", "current")
   },
   computed: {
@@ -58,7 +57,6 @@ export default {
   },
   methods: {
     changeExpense(expense) {
-      this.transaction.account.source = ""
       if(expense == null){
         this.transaction.expense = ""
       } else {
