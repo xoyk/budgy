@@ -1,0 +1,65 @@
+// Override / set color variables
+
+$blue: #3399ff;
+$green: #1FF0BE;
+$orange: #f5f5f5;
+
+
+$primary: $blue;
+$success: $green;
+$secondary: $orange;
+
+$omb-text-primary: rgba(0, 0, 0, 0.9);
+$omb-text-secondary: rgba(0, 0, 0, 0.5);
+$omb-text-primary2: #000000;
+$omb-text-body: 16px bold;
+$omb-text-footnote: 14px;
+$omb-text-caption: 12px;
+$omb-text-title: 12px;
+$omb-text-headline: 21px;
+
+
+$omb-color-primary: rgba(0, 0, 0, 0.9);
+//$omb-color-primary: #00FF38;
+//$omb-color-tetriary: #00FFC2;
+$omb-color-secondary: rgba(0, 0, 0, 0.5);
+$omb-color-tetriary: rgba(0, 0, 0, 0.3);
+
+
+$omb-button-primary-first: #13ffc6;
+$omb-button-primary-first-position: 4.17%;
+$omb-button-primary-second: #79ff49;
+$omb-button-primary-second-position: 93.62%;
+$omb-button-primary-degree: 91.47deg;
+
+$omb-bg-color-accent: #f5f5f5;
+$omb-border-color-accent: #f5f5f5;
+$omb-main-color-primary: linear-gradient(91.47deg, #00FF38 4.17%, #00FFC2 93.62%);
+
+$omb-margin: 24px;
+$omb-margin-sm: 12px;
+$omb-margin-left: 24px;
+$omb-margin-bottom: 16px;
+
+$omb-padding: 16px;
+$omb-height: 54px;
+
+$omb-border-radius: 24px;
+
+//$omb-button-primary: #00FF38 !important;
+
+//$border-radius: 16px 0 0 16px !important;
+$input-font-size: 16px !important;
+
+//$input-btn-focus-width:       .2rem !default;
+//$input-btn-focus-color:       rgba($component-active-bg, .25) !default;
+$input-btn-focus-box-shadow:  0;
+$input-focus-box-shadow:                $input-btn-focus-box-shadow;
+$box-shadow:                  0;
+$input-border-color:                    $orange;
+$border-color:                $orange !important;
+
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/_transitions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
