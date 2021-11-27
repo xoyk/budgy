@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Period from "@/views/Period";
 import Plan from "@/views/Plan";
-import Stats from "../views/Stats";
 import Login from "../components/Login";
 import Secure from "../components/Secure";
 import Sighup from "../components/Sighup";
@@ -142,11 +141,6 @@ const routes = [
     name: "account",
     component: Account,
     props: true
-  },
-  {
-    path: "/stats",
-    name: "statistic",
-    component: Stats
   },
   {
     path: '/login',

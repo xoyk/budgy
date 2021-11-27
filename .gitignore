@@ -23,4 +23,3 @@ yarn-error.log*
 # cypress example files
 cypress/integration/examples
 cypress/fixtures
-/src/assets/icons/

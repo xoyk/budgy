@@ -124,7 +124,6 @@ export default {
   .omb-text-body {
     font-size: 16px;
     line-height: normal;
-    text-align: left;
   }
 
   .omb-text-headline {
@@ -171,6 +170,18 @@ export default {
     color: #34c700;
   }
 
+  .omb-layout-height100 {
+    height: 100vh;
+  }
+
+  .omb-gap {
+    gap: $omb-gap;
+  }
+
+  .omb-height {
+    height: $omb-height;
+  }
+
   .omb-scrollable {
     overflow-y: scroll;
   }
@@ -215,6 +226,14 @@ export default {
     display: grid;
   }
 
+  .omb-border-bottom {
+    border-bottom: solid 1px $omb-color-tetriary !important;
+  }
+
+  .omb-height {
+    height: $omb-height;
+  }
+
   .omb-margin-left {
     margin-left: 24px;
   }
@@ -249,8 +268,8 @@ export default {
     padding-right: $omb-padding;
   }
 
-  .omb-height {
-    height: $omb-height;
+  .omb-padding-icon {
+    padding: $omb-padding-icon;
   }
 
   .tab-content {
