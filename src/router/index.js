@@ -12,7 +12,7 @@ import Account from "../views/Account";
 import store from "../store/index"
 import PeriodCreate from "../views/PeriodCreate";
 import Transaction from "../views/Transaction"
-import TransactionEdit from "../views/TransactionEdit";
+// import TransactionEdit from "../views/TransactionEdit";
 import ExpenseSource from "../components/tabs/ExpenseSource";
 import AccountSource from "../components/tabs/AccountSource";
 import TransactionSuccess from "../views/TransactionSuccess";
@@ -58,15 +58,15 @@ const routes = [
       requiresAuth: true
     }
   },
-  {
-    path: "/transaction-edit/:transactionId",
-    name: "transaction-edit",
-    component: TransactionEdit,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
-  },
+  // {
+  //   path: "/transaction-edit/:transactionId",
+  //   name: "transaction-edit",
+  //   component: TransactionEdit,
+  //   props: true,
+  //   meta: {
+  //     requiresAuth: true
+  //   }
+  // },
   {
     path: "/test/:transactionId",
     name: "transaction-test",
