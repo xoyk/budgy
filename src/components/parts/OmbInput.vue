@@ -1,6 +1,7 @@
 <template>
   <div class="omb-height d-flex omb-border-bottom flex-row justify-content-between flex-grow-1">
-    <div>
+    <div class="d-flex flex-column">
+      <label class="align-self-start omb-text-caption omb-color-tetriary" v-if="label">{{ label }}</label>
       <input
           :type="type"
           class="omb-form-input flex-grow-1"
@@ -13,7 +14,6 @@
       <OmbIcon :icon="icon"></OmbIcon>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -30,7 +30,8 @@ export default {
     type: String,
     placeholder: String,
     value: String,
-    icon: String
+    icon: String,
+    label: String
   },
   methods: {
     clicked() {
@@ -48,8 +49,5 @@ export default {
 <style lang="scss" scoped>
   input {
     height: 38px;
-    background-color: red !important;
   }
-
-
 </style>

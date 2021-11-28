@@ -107,6 +107,74 @@ export default {
     text-decoration: none;
   }
 
+  .grid {
+    display: grid;
+  }
+
+  label {
+    margin-bottom: 0 !important;
+  }
+
+  .omb-button-primary {
+    background: linear-gradient($omb-button-primary-degree, $omb-button-primary-first, $omb-button-primary-second);
+  }
+
+  .omb-button-primary.disabled {
+    opacity: 0.3;
+  }
+
+  .omb-color-primary {
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  .omb-color-primary2 {
+    color: rgba(0, 0, 0, 1);
+  }
+
+  .omb-color-secondary {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .omb-color-tetriary {
+    color: rgba(0, 0, 0, 0.3);
+  }
+
+  .omb-color-success {
+    color: #34c700;
+  }
+
+  .omb-form-input {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    padding: 0;
+    //border-bottom: solid 1px $omb-color-tetriary !important;
+    border: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .omb-form-input-2 {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    padding: 20.5px 0 20.5px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .omb-gap {
+    gap: $omb-gap;
+  }
+
+  .omb-height {
+    height: $omb-height;
+  }
+
+  .omb-layout-height100 {
+    height: 100vh;
+  }
+
   // текстовые стили
   .omb-text-caption {
     font-size: 12px;
@@ -142,52 +210,8 @@ export default {
     line-height: 135%;
   }
 
-  .omb-button-primary {
-    background: linear-gradient($omb-button-primary-degree, $omb-button-primary-first, $omb-button-primary-second);
-  }
-
-  .omb-button-primary.disabled {
-    opacity: 0.3;
-  }
-
-  .omb-color-primary {
-    color: rgba(0, 0, 0, 0.9);
-  }
-
-  .omb-color-primary2 {
-    color: rgba(0, 0, 0, 1);
-  }
-
-  .omb-color-secondary {
-    color: rgba(0, 0, 0, 0.5);
-  }
-
-  .omb-color-tetriary {
-    color: rgba(0, 0, 0, 0.3);
-  }
-
-  .omb-color-success {
-    color: #34c700;
-  }
-
-  .omb-layout-height100 {
-    height: 100vh;
-  }
-
-  .omb-gap {
-    gap: $omb-gap;
-  }
-
-  .omb-height {
-    height: $omb-height;
-  }
-
   .omb-scrollable {
     overflow-y: scroll;
-  }
-
-  .omb-wrapper {
-    overflow: hidden;
   }
 
   .omb-scrollable::-webkit-scrollbar {
@@ -198,32 +222,8 @@ export default {
     text-transform: uppercase;
   }
 
-  .omb-form-input {
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    padding: 0;
-    border-bottom: solid 1px $omb-color-tetriary !important;
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .omb-form-input-2 {
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    padding: 20.5px 0 20.5px 0;
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  ::placeholder {
-    color: rgba(0, 0, 0, 0.3);
-  }
-
-
-  .grid {
-    display: grid;
+  .omb-wrapper {
+    overflow: hidden;
   }
 
   .omb-border-bottom {
@@ -298,9 +298,6 @@ export default {
     line-height: 19px;
   }
 
-  .item-list.active {
-  }
-
   footer {
     position: sticky;
     bottom: 0;
@@ -320,6 +317,17 @@ export default {
     margin-bottom: 10px;
   }
 
+  .budgy-button {
+    margin-bottom: 10px;
+    font-size: 16px;
+    border: 0;
+    width: 100%;
+    border-radius: 24px;
+    color: black;
+    height: 48px;
+    background: linear-gradient(91.47deg, #00FF38 4.17%, #00FFC2 93.62%);
+  }
+
   .budgy-icon {
     width: 36px;
     height: 36px;
@@ -331,20 +339,15 @@ export default {
     background-color: #FFDAD9;
   }
 
-  .budgy-button {
-    margin-bottom: 10px;
-    font-size: 16px;
-    border: 0;
-    width: 100%;
-    //border-radius: $omb-border-radius;
-    border-radius: 24px;
-    color: black;
-    height: 48px;
-    background: linear-gradient(91.47deg, #00FF38 4.17%, #00FFC2 93.62%);
+  :focus-visible {
+    outline: -webkit-focus-ring-color auto 1px;
+    outline-color: -webkit-focus-ring-color;
+    outline-style: none;
+    outline-width: 0;
   }
 
-  body {
-    //--cupertino-pane-move-background: #e00231;
+  ::placeholder {
+    color: rgba(0, 0, 0, 0.3);
   }
 </style>
 

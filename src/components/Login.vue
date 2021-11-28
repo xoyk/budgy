@@ -4,20 +4,12 @@
       <form class="login flex-grow-1" @submit.prevent="login">
         <CloseButton></CloseButton>
         <h1 class="omb-text-headline">Вход</h1>
-        <div class="omb-margin-bottom d-flex flex-column" style="background-color: #0cb68e" id="email-field">
-          <label class="align-self-start omb-text-caption omb-color-tetriary" for="email-field" v-if="email">Email</label>
-          <OmbInput class="omb-field" type="text" style="background-color: #2db487" placeholder="Email" v-model="email"></OmbInput>
+        <div class="omb-margin-bottom">
+          <OmbInput type="text" v-model="email" label="Email"></OmbInput>
         </div>
-
-        <div class="d-flex justify-content-between">
-<!--          <OmbInputPassword v-model="password"></OmbInputPassword>-->
-          <OmbInput :type="type" placeholder="Пароль" v-model="password" :icon="icon" v-on:clicked="togglePassword()"></OmbInput>
+        <div>
+          <OmbInput :type="type" v-model="password" :icon="icon" label="Пароль" v-on:clicked="togglePassword()"></OmbInput>
         </div>
-
-<!--        <div class="text-right omb-height d-flex flex-row align-items-center">-->
-<!--          <div class="flex-grow-1 omb-text-body omb-color-secondary">Напомнить пароль?</div>-->
-<!--        </div>-->
-
       </form>
 
       <div class="text-right omb-height d-flex flex-row justify-content-center omb-gap p16024">
@@ -97,5 +89,27 @@ export default {
   .omb-field, input {
     height: 38px !important;
     background-color: transparent !important;
+    border: none;
+    outline-color: transparent;
+  }
+
+  input:focus-visible {
+    outline-color: transparent !important;
+  }
+
+  .empty-input {
+    height: 54px;
+  }
+
+  /* Change the white to any color ;) */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+  }
+
+  input:focus {
+    background-color: #0c5460 !important;
   }
 </style>
