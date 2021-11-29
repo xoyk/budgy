@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Period from "@/views/Period";
 import Plan from "@/views/Plan";
-import Stats from "../views/Stats";
 import Login from "../components/Login";
 import Secure from "../components/Secure";
 import Sighup from "../components/Sighup";
@@ -13,7 +12,7 @@ import Account from "../views/Account";
 import store from "../store/index"
 import PeriodCreate from "../views/PeriodCreate";
 import Transaction from "../views/Transaction"
-import TransactionEdit from "../views/TransactionEdit";
+// import TransactionEdit from "../views/TransactionEdit";
 import ExpenseSource from "../components/tabs/ExpenseSource";
 import AccountSource from "../components/tabs/AccountSource";
 import TransactionSuccess from "../views/TransactionSuccess";
@@ -59,15 +58,15 @@ const routes = [
       requiresAuth: true
     }
   },
-  {
-    path: "/transaction-edit/:transactionId",
-    name: "transaction-edit",
-    component: TransactionEdit,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
-  },
+  // {
+  //   path: "/transaction-edit/:transactionId",
+  //   name: "transaction-edit",
+  //   component: TransactionEdit,
+  //   props: true,
+  //   meta: {
+  //     requiresAuth: true
+  //   }
+  // },
   {
     path: "/test/:transactionId",
     name: "transaction-test",
@@ -142,11 +141,6 @@ const routes = [
     name: "account",
     component: Account,
     props: true
-  },
-  {
-    path: "/stats",
-    name: "statistic",
-    component: Stats
   },
   {
     path: '/login',

@@ -107,40 +107,12 @@ export default {
     text-decoration: none;
   }
 
-  // текстовые стили
-  .omb-text-caption {
-    font-size: 12px;
-    line-height: 135%;
+  .grid {
+    display: grid;
   }
 
-  .omb-text-title {
-    font-size: $omb-text-title;
-    line-height: 135%;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: left;
-  }
-
-  .omb-text-body {
-    font-size: 16px;
-    line-height: normal;
-    text-align: left;
-  }
-
-  .omb-text-headline {
-    font-size: $omb-text-headline;
-    line-height: 135%;
-  }
-
-  .omb-text-headline-super {
-    font-size: 50px;
-    line-height: 100%;
-    font-weight: bold;
-  }
-
-  .omb-text-footnote {
-    font-size: 14px;
-    line-height: 135%;
+  label {
+    margin-bottom: 0 !important;
   }
 
   .omb-button-primary {
@@ -171,28 +143,13 @@ export default {
     color: #34c700;
   }
 
-  .omb-scrollable {
-    overflow-y: scroll;
-  }
-
-  .omb-wrapper {
-    overflow: hidden;
-  }
-
-  .omb-scrollable::-webkit-scrollbar {
-    display: none;
-  }
-
-  .omb-uppercase {
-    text-transform: uppercase;
-  }
-
   .omb-form-input {
     border-top: 0;
     border-left: 0;
     border-right: 0;
     padding: 0;
-    border-bottom: solid 1px $omb-color-tetriary !important;
+    //border-bottom: solid 1px $omb-color-tetriary !important;
+    border: 0;
     display: grid;
     grid-template-columns: 1fr;
   }
@@ -206,13 +163,75 @@ export default {
     grid-template-columns: 1fr;
   }
 
-  ::placeholder {
-    color: rgba(0, 0, 0, 0.3);
+  .omb-gap {
+    gap: $omb-gap;
   }
 
+  .omb-height {
+    height: $omb-height;
+  }
 
-  .grid {
-    display: grid;
+  .omb-layout-height100 {
+    height: 100vh;
+  }
+
+  // текстовые стили
+  .omb-text-caption {
+    font-size: 12px;
+    line-height: 135%;
+  }
+
+  .omb-text-title {
+    font-size: $omb-text-title;
+    line-height: 135%;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .omb-text-body {
+    font-size: 16px;
+    line-height: normal;
+  }
+
+  .omb-text-headline {
+    font-size: $omb-text-headline;
+    line-height: 135%;
+  }
+
+  .omb-text-headline-super {
+    font-size: 50px;
+    line-height: 100%;
+    font-weight: bold;
+  }
+
+  .omb-text-footnote {
+    font-size: 14px;
+    line-height: 135%;
+  }
+
+  .omb-scrollable {
+    overflow-y: scroll;
+  }
+
+  .omb-scrollable::-webkit-scrollbar {
+    display: none;
+  }
+
+  .omb-uppercase {
+    text-transform: uppercase;
+  }
+
+  .omb-wrapper {
+    overflow: hidden;
+  }
+
+  .omb-border-bottom {
+    border-bottom: solid 1px $omb-color-tetriary !important;
+  }
+
+  .omb-height {
+    height: $omb-height;
   }
 
   .omb-margin-left {
@@ -249,8 +268,8 @@ export default {
     padding-right: $omb-padding;
   }
 
-  .omb-height {
-    height: $omb-height;
+  .omb-padding-icon {
+    padding: $omb-padding-icon;
   }
 
   .tab-content {
@@ -279,9 +298,6 @@ export default {
     line-height: 19px;
   }
 
-  .item-list.active {
-  }
-
   footer {
     position: sticky;
     bottom: 0;
@@ -301,6 +317,17 @@ export default {
     margin-bottom: 10px;
   }
 
+  .budgy-button {
+    margin-bottom: 10px;
+    font-size: 16px;
+    border: 0;
+    width: 100%;
+    border-radius: 24px;
+    color: black;
+    height: 48px;
+    background: linear-gradient(91.47deg, #00FF38 4.17%, #00FFC2 93.62%);
+  }
+
   .budgy-icon {
     width: 36px;
     height: 36px;
@@ -312,20 +339,15 @@ export default {
     background-color: #FFDAD9;
   }
 
-  .budgy-button {
-    margin-bottom: 10px;
-    font-size: 16px;
-    border: 0;
-    width: 100%;
-    //border-radius: $omb-border-radius;
-    border-radius: 24px;
-    color: black;
-    height: 48px;
-    background: linear-gradient(91.47deg, #00FF38 4.17%, #00FFC2 93.62%);
+  :focus-visible {
+    outline: -webkit-focus-ring-color auto 1px;
+    outline-color: -webkit-focus-ring-color;
+    outline-style: none;
+    outline-width: 0;
   }
 
-  body {
-    //--cupertino-pane-move-background: #e00231;
+  ::placeholder {
+    color: rgba(0, 0, 0, 0.3);
   }
 </style>
 
