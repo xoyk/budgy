@@ -12,7 +12,7 @@
       <span class="expense-balance omb-text-body align-self-center">{{ freeMoney.amount | currency }} </span>
     </div>
     <div
-        class="item-list d-flex justify-content-between"
+        class="item-list d-flex text-left justify-content-between"
         :class="{ active : transaction.expense === expense.id }"
         v-for="expense in expensesActive"
         :key="expense.id"
