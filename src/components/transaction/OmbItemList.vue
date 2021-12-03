@@ -1,6 +1,6 @@
 <template>
   <div
-      class="item-list d-flex justify-content-between"
+      class="item-list text-left d-flex justify-content-between"
       @click="clicked(item)"
   >
     <div class="budgy-icon icon-expense"></div>

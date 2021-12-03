@@ -8,7 +8,7 @@ import stringHelpers from '@/services/string-helpers'
 Vue.prototype.stringHelpers = stringHelpers
 Vue.stringHelpers = stringHelpers
 
-import "bootstrap/dist/css/bootstrap.css";
+//import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);

@@ -88,12 +88,14 @@ export default {
     add() {
       this.newIncome = true
       this.showAmount = true
+      this.transaction.name = this.transaction.income ? "" : this.transaction.name
+      this.transaction.amount = this.transaction.income ? "" : this.transaction.amount
       this.transaction.income = ""
-      this.transaction.amount = ""
     }
   },
   created() {
     this.fetchData()
+    this.newIncome = this.transaction.income ? false : (this.transaction.amount || this.transaction.name ? true : false);
     this.transaction.transactionType = "income"
     this.transaction.type = "income"
     this.transaction.account.source = ""

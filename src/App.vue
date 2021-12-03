@@ -103,6 +103,10 @@ export default {
     outline: none !important;
   }
 
+  .color-freemoney {
+    background-color: $omb-bg-color-accent;
+  }
+
   .drawer-buttons > a:hover {
     text-decoration: none;
   }

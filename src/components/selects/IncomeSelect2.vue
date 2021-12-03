@@ -34,6 +34,7 @@ export default {
     changeIncome(income) {
       if(this.transaction.income !== income.id) {
         this.transaction.income = income.id
+        this.transaction.name = this.incomes.items.active[income.id].name
         this.transaction.amount = income.amount
       } else {
         this.transaction.income = ""

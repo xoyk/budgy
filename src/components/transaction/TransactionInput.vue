@@ -1,11 +1,13 @@
 <template>
-  <input
+  <div class="omb-border-bottom">
+    <input
       :type="type"
       class="omb-form-input w-100"
       :placeholder="placeholder"
       v-bind:value="value"
       v-on:input="$emit('input', $event.target.value)"
   />
+  </div>
 </template>
 
 <script>
