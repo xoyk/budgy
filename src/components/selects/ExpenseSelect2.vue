@@ -6,7 +6,7 @@
       :class="{ active : transaction.account.source === '' && transaction.expense === '' }"
       v-if="freeMoney"
       >
-      <div class="budgy-icon icon-expense"></div>
+      <div class="budgy-icon color-freemoney"></div>
       <span class="item-list-name omb-text-body align-self-center flex-grow-1">Свободные</span>
       <span class="expense-balance omb-text-body align-self-center">{{ freeMoney.amount | currency }} </span>
     </div>

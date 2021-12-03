@@ -91,7 +91,6 @@ export default {
       this.transaction.name = this.transaction.income ? "" : this.transaction.name
       this.transaction.amount = this.transaction.income ? "" : this.transaction.amount
       this.transaction.income = ""
-      this.transaction.amount = ""
     }
   },
   created() {
