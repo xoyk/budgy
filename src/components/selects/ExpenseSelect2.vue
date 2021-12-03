@@ -1,6 +1,5 @@
 <template>
   <div class="d-flex flex-column">
-
     <div
       class="item-list freeMoney text-left d-flex justify-content-between"
       @click="changeExpense(null)"
@@ -11,28 +10,25 @@
       <span class="item-list-name omb-text-body align-self-center flex-grow-1">Свободные</span>
       <span class="expense-balance omb-text-body align-self-center">{{ freeMoney.amount | currency }} </span>
     </div>
-    <div
-        class="item-list d-flex text-left justify-content-between"
-        :class="{ active : transaction.expense === expense.id }"
-        v-for="expense in expensesActive"
-        :key="expense.id"
-        @click="changeExpense(expense)"
+
+    <OmbItemList
+        v-for="item in expensesActive"
+        :key="item.id"
+        :item="item"
+        v-on:clicked="changeExpense(item)"
     >
-        <div class="budgy-icon icon-expense"></div>
-        <span class="item-list-name omb-text-body align-self-center flex-grow-1">{{ expense.name }}</span>
-        <span class="expense-balance omb-text-body align-self-center">{{ expense.balance | currency }}</span>
-    </div>
+    </OmbItemList>
   </div>
 </template>
-
 <script>
 
 import { mapState } from "vuex";
+import OmbItemList from "@/components/transaction/OmbItemList";
 
 export default {
   name: "ExpenseSelect2",
   components: {
-
+    OmbItemList
   },
   props: {
     accountType: String
