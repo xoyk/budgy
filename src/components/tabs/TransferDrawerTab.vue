@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <TransactionInput type="number" placeholder="Сумма" v-model="transaction.amount"></TransactionInput>
+        <OmbInput type="number" v-model="transaction.amount" label="Сумма" id="amount"></OmbInput>
     </div>
     <div>
       <TransactionAccountSelect text="Откуда переводим" type="source" :default="accounts.default" v-if="accounts.default"></TransactionAccountSelect>
@@ -22,14 +22,14 @@
 
 <script>
 import {mapState} from "vuex";
-import TransactionInput from "../transaction/TransactionInput";
+import OmbInput from "../parts/OmbInput";
 import TransactionAccountSelect from "../transaction/TransactionAccountSelect";
 
 export default {
   name: "TransferDrawerTab",
   components: {
     TransactionAccountSelect,
-    TransactionInput
+    OmbInput
   },
   props: {
     form: Object

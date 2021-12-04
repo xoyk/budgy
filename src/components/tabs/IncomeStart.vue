@@ -13,8 +13,12 @@
 
     </div>
     <div v-if="newIncome">
-      <TransactionInput mask-type="currency" type="number" placeholder="Сумма" v-model="transaction.amount"></TransactionInput>
-      <TransactionInput type="text" placeholder="Что за доход?" v-model="transaction.name"></TransactionInput>
+      <div class="omb-margin-bottom">
+        <OmbInput type="number" v-model="transaction.amount" label="Сумма" id="amount"></OmbInput>
+      </div>
+      <div>
+        <OmbInput type="text" v-model="transaction.name" label="Что за доход?" id="name"></OmbInput>
+      </div>
     </div>
     <div class="omb-wrapper">
       <TransactionAccountSelect text="Куда" type="receiver" :default="accounts.default" v-if="accounts.default"></TransactionAccountSelect>
@@ -36,14 +40,14 @@
 
 import {mapState} from "vuex";
 import IncomeSelect2 from "../selects/IncomeSelect2";
-import TransactionInput from "../transaction/TransactionInput";
+import OmbInput from "../parts/OmbInput";
 import TransactionAccountSelect from "../transaction/TransactionAccountSelect";
 
 export default {
   name: "IncomeStart",
   components: {
     IncomeSelect2,
-    TransactionInput,
+    OmbInput,
     TransactionAccountSelect
   },
   data() {
@@ -95,7 +99,7 @@ export default {
   },
   created() {
     this.fetchData()
-    this.newIncome = this.transaction.income ? false : (this.transaction.amount || this.transaction.name ? true : false);
+    this.newIncome = this.transaction.income ? false : !!(this.transaction.amount || this.transaction.name);
     this.transaction.transactionType = "income"
     this.transaction.type = "income"
     this.transaction.account.source = ""

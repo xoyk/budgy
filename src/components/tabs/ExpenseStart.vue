@@ -1,8 +1,12 @@
 <template>
   <div class="omb-grid-3">
     <div class="d-flex flex-column" id="inputs">
-      <TransactionInput type="number" placeholder="Сумма" v-model="transaction.amount"></TransactionInput>
-      <TransactionInput type="text" placeholder="Куда потратили" v-model="transaction.name"></TransactionInput>
+      <div class="omb-margin-bottom">
+        <OmbInput type="number" v-model="transaction.amount" label="Сумма" id="amount"></OmbInput>
+      </div>
+      <div>
+        <OmbInput type="text" v-model="transaction.name" label="Куда потратили" id="name"></OmbInput>
+      </div>
     </div>
     <TransactionExpenseSelect :default="{name: 'Свободные', amount: freeMoney.amount }"></TransactionExpenseSelect>
     <TransactionAccountSelect
@@ -20,7 +24,7 @@
 <script>
 import {mapState} from "vuex";
 import Buttons from "../parts/Buttons";
-import TransactionInput from "../transaction/TransactionInput";
+import OmbInput from "../parts/OmbInput";
 import TransactionExpenseSelect from "../transaction/TransactionExpenseSelect";
 import TransactionAccountSelect from "../transaction/TransactionAccountSelect";
 
@@ -28,7 +32,7 @@ export default {
   name: "ExpenseStart",
   components: {
     Buttons,
-    TransactionInput,
+    OmbInput,
     TransactionExpenseSelect,
     TransactionAccountSelect
   },
