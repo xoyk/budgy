@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex flex-column omb-layout-height100">
     <BackButton v-on:clicked="cancel" class="omb-margin-1"/>
 
     <div class="omb-margin-1">
@@ -33,14 +33,11 @@
 
     <TransactionTypeSelect></TransactionTypeSelect>
 
-    <div id="transaction-fields" v-if="period" class="omb-margin-1">
-      <div class="omb-grid-1 omb-margin-bottom">
+    <div id="transaction-fields" v-if="period" class="omb-margin-1 flex-grow-1 d-flex">
         <ExpenseStart v-if="transaction.type === 'expense'"></ExpenseStart>
         <IncomeStart v-if="transaction.type === 'income'"></IncomeStart>
         <SavingDrawerTab v-if="transaction.transactionType === 'saving'"></SavingDrawerTab>
         <TransferDrawerTab v-if="transaction.transactionType === 'transfer'"></TransferDrawerTab>
-      </div>
-
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="income-fields">
+  <div class="d-flex flex-column flex-grow-1">
     <div>
       <IncomeSelect2></IncomeSelect2>
     </div>
@@ -24,15 +24,9 @@
       <TransactionAccountSelect text="Куда" type="receiver" :default="accounts.default" v-if="accounts.default"></TransactionAccountSelect>
     </div>
 
-    <div class="drawer-buttons d-flex justify-content-between">
-      <div class="d-flex flex-grow-1" @click="cancel" v-if="buttons.button1">
-        <button id="first-button" class="flex-grow-1 omb-button-secondary">{{  buttons.button1.text }}</button>
-      </div>
+    <div class="flex-grow-1"></div>
 
-      <div class="d-flex flex-grow-1">
-        <button class="flex-grow-1 omb-button-primary" @click="save">{{ buttons.button2.text }}</button>
-      </div>
-    </div>
+    <TransactionButtons :buttons="buttons"></TransactionButtons>
   </div>
 </template>
 
@@ -42,13 +36,15 @@ import {mapState} from "vuex";
 import IncomeSelect2 from "../selects/IncomeSelect2";
 import OmbInput from "../parts/OmbInput";
 import TransactionAccountSelect from "../transaction/TransactionAccountSelect";
+import TransactionButtons from "../parts/TransactionButtons";
 
 export default {
   name: "IncomeStart",
   components: {
     IncomeSelect2,
     OmbInput,
-    TransactionAccountSelect
+    TransactionAccountSelect,
+    TransactionButtons
   },
   data() {
     return {
@@ -120,13 +116,6 @@ export default {
 </script>
 
 <style scoped>
-  .income-fields {
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 16px;
-    width: 100%;
-  }
-
   #new-income-button {
     margin-right: 0;
     height: 47px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="omb-grid-3">
+  <div class="d-flex flex-column flex-grow-1">
     <div class="d-flex flex-column" id="inputs">
       <div class="omb-margin-bottom">
         <OmbInput type="number" v-model="transaction.amount" label="Сумма" id="amount"></OmbInput>
@@ -15,23 +15,23 @@
         :default="accounts.default"
         v-if="accounts.default"
     />
-    <div id="buttons">
-      <Buttons :button1="buttons.button1" :button2="buttons.button2" v-on:clicked="saveTransaction"></Buttons>
-    </div>
+    <div class="flex-grow-1"></div>
+    <TransactionButtons :buttons="buttons"></TransactionButtons>
   </div>
 </template>
 
 <script>
 import {mapState} from "vuex";
-import Buttons from "../parts/Buttons";
+import TransactionButtons from "../parts/TransactionButtons";
 import OmbInput from "../parts/OmbInput";
 import TransactionExpenseSelect from "../transaction/TransactionExpenseSelect";
 import TransactionAccountSelect from "../transaction/TransactionAccountSelect";
 
+
 export default {
   name: "ExpenseStart",
   components: {
-    Buttons,
+    TransactionButtons,
     OmbInput,
     TransactionExpenseSelect,
     TransactionAccountSelect
@@ -104,12 +104,6 @@ export default {
 
   input.active {
     font-weight: bold;
-  }
-
-  #buttons {
-    position: sticky;
-    bottom: 0;
-    height: 104px;
   }
 
   #inputs {

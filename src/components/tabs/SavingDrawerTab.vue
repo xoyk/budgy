@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div>
+  <div class="d-flex flex-column flex-grow-1">
       <h3 class="sub_header">На что откладываем</h3>
       <SavingSelect2 :form="form"></SavingSelect2>
       <TransactionAccountSelect
@@ -10,16 +9,8 @@
           v-if="accounts.default"
       />
       <TransactionAccountSelect text="На какой счет сохраняем" type="receiver" :default="accounts.default" v-if="accounts.default"></TransactionAccountSelect>
-      <div class="drawer-buttons d-flex justify-content-between">
-        <div class="d-flex flex-grow-1" @click="cancel" v-if="buttons.button1">
-          <button id="first-button" class="flex-grow-1 omb-button-secondary">{{  buttons.button1.text }}</button>
-        </div>
-
-        <div class="d-flex flex-grow-1">
-          <button class="flex-grow-1 omb-button-primary" @click="save">{{ buttons.button2.text }}</button>
-        </div>
-      </div>
-    </div>
+      <div class="flex-grow-1"></div>
+      <TransactionButtons :buttons="buttons"></TransactionButtons>
   </div>
 </template>
 
@@ -27,12 +18,14 @@
 import {mapState} from "vuex";
 import SavingSelect2 from "../selects/SavingSelect2";
 import TransactionAccountSelect from "../transaction/TransactionAccountSelect";
+import TransactionButtons from "../parts/TransactionButtons";
 
 export default {
   name: "SavingDrawerTab",
   components: {
     TransactionAccountSelect,
-    SavingSelect2
+    SavingSelect2,
+    TransactionButtons
   },
   props: {
     form: Object
