@@ -1,8 +1,8 @@
 <template>
-  <div id="omb-select" class="d-flex justify-content-start" @click="clicked()">
+  <div id="omb-select" class="d-flex justify-content-start" @click="clicked()" :style="{backgroundColor: color ? '#' + color : 'transparent'}">
     <OmbIcon name="shevron-down"></OmbIcon>
     <div class="flex-grow-1 text-left">{{title}}</div>
-    <div>{{ amount | currency }}</div>
+    <div>{{ amount / 100 | currency }}</div>
   </div>
 </template>
 

@@ -12,22 +12,6 @@
     @ok="savePlan"
   >
     <b-form class="modal-body" id="transactionCreateForm">
-<!--      <b-tabs pills content-class="mt-3" v-model="tabIndex" v-if="editedItem">-->
-<!--        <b-tab-->
-<!--            title="Расход"-->
-<!--            data-cy="modal_transaction_type_expense"-->
-<!--            id="transactionTypeExpense"-->
-<!--            name="transactionType"-->
-<!--        >-->
-
-<!--        </b-tab>-->
-<!--        <b-tab title="Доход">-->
-
-<!--        </b-tab>-->
-<!--        <b-tab title="Накопление">-->
-
-<!--        </b-tab>-->
-<!--      </b-tabs>-->
         <b-form-group>
           <b-form-input
               class="form-control form-control-lg"
@@ -106,7 +90,7 @@ export default {
 
       if(this.editedItem){
         this.form.name = this.editedItem.name || ""
-        this.form.amount = this.editedItem.amount || ""
+        this.form.amount = this.editedItem.amount / 100 || ""
         this.form.id = this.editedItem.id || ""
 
         if(this.type === "income"){

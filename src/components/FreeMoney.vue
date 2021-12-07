@@ -1,15 +1,15 @@
 <template>
     <div class="budgy-card omb-margin-1" v-if="freeMoney">
       <p class="title">{{ title }}</p>
-      <span class="freeMoneyAmount">{{ formatAmount(freeMoney.amount) }}</span>
+      <span class="freeMoneyAmount">{{ formatAmount(freeMoney.amount / 100) }}</span>
       <p class="omb-text-caption omb-color-secondary">
         До конца периода осталось {{ this.stringHelpers.decl(period.current.days_to_the_end, ["день", "дня", "дней"]) }}
       </p>
 
       <progress :max="freeMoney.total" :value="freeMoney.total-freeMoney.spent"></progress>
       <div class="clearfix progress-title-container">
-        <div class="float-left"><span class="omb-text-caption omb-color-tetriary">Потрачено {{ formatAmount(freeMoney.spent) }}</span></div>
-        <div class="float-right"><span class="omb-text-caption omb-color-tetriary">из {{ formatAmount(freeMoney.total) }}
+        <div class="float-left"><span class="omb-text-caption omb-color-tetriary">Потрачено {{ formatAmount(freeMoney.spent / 100) }}</span></div>
+        <div class="float-right"><span class="omb-text-caption omb-color-tetriary">из {{ formatAmount(freeMoney.total / 100) }}
         </span></div>
       </div>
     </div>

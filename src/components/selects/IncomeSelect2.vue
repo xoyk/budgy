@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div id="income-list" class="d-flex flex-column" v-if="incomes.items">
+    <div id="income-list" class="d-flex flex-column" v-if="incomes.active">
       <div
           class="item-list d-flex justify-content-between"
           :class="{ active : transaction.income === income.id }"
-          v-for="income in incomes.items.active"
+          v-for="income in incomes.active"
           :key="income.id"
           @click="changeIncome(income)"
       >
         <div>{{ income.name }}</div>
-        <div>{{ formatAmount(income.amount) }}</div>
+        <div>{{ formatAmount(income.amount / 100) }}</div>
       </div>
     </div>
   </div>
@@ -34,8 +34,8 @@ export default {
     changeIncome(income) {
       if(this.transaction.income !== income.id) {
         this.transaction.income = income.id
-        this.transaction.name = this.incomes.items.active[income.id].name
-        this.transaction.amount = income.amount
+        this.transaction.name = this.incomes.active[income.id].name
+        this.transaction.amount = income.amount / 100
       } else {
         this.transaction.income = ""
       }

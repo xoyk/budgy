@@ -1,9 +1,9 @@
 <template>
-  <div class="income-fields">
+  <div class="d-flex flex-column flex-grow-1">
     <div>
       <IncomeSelect2></IncomeSelect2>
     </div>
-    <div id="new-income-button" class="item-list d-flex flex-column" @click="add">
+    <div id="new-income-button" class="item-list d-flex flex-column omb-margin-bottom" @click="add">
       <div>
         Другой доход <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 5V19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -24,15 +24,7 @@
       <TransactionAccountSelect text="Куда" type="receiver" :default="accounts.default" v-if="accounts.default"></TransactionAccountSelect>
     </div>
 
-    <div class="drawer-buttons d-flex justify-content-between">
-      <div class="d-flex flex-grow-1" @click="cancel" v-if="buttons.button1">
-        <button id="first-button" class="flex-grow-1 omb-button-secondary">{{  buttons.button1.text }}</button>
-      </div>
-
-      <div class="d-flex flex-grow-1">
-        <button class="flex-grow-1 omb-button-primary" @click="save">{{ buttons.button2.text }}</button>
-      </div>
-    </div>
+    <div class="flex-grow-1"></div>
   </div>
 </template>
 
@@ -52,17 +44,6 @@ export default {
   },
   data() {
     return {
-      buttons: {
-        button1: {
-          text: "Отменить",
-          color: ""
-        },
-        button2: {
-          text: "Добавить",
-          color: "",
-          router: this.router
-        },
-      },
       newIncome: false,
       showAmount: false
     }
@@ -73,21 +54,6 @@ export default {
   methods: {
     fetchData() {
       this.$store.dispatch('fetchIncomes', this.period.now)
-    },
-    cancel() {
-      // TODO: КОПИПАСТА
-      this.$router.push({name: "index"})
-      this.$store.dispatch("transaction/clearTransaction")
-    },
-    save() {
-      event.preventDefault();
-      this.$store
-          .dispatch("transaction/saveTransaction", this.transaction)
-          .then(() => {
-            this.$store.dispatch("transaction/clearTransaction")
-            this.$router.push({name: "index"})
-          })
-          .catch(() => {});
     },
     add() {
       this.newIncome = true
@@ -120,13 +86,6 @@ export default {
 </script>
 
 <style scoped>
-  .income-fields {
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 16px;
-    width: 100%;
-  }
-
   #new-income-button {
     margin-right: 0;
     height: 47px;

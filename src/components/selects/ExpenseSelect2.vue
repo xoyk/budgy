@@ -8,7 +8,7 @@
       >
       <div class="budgy-icon color-freemoney"></div>
       <span class="item-list-name omb-text-body align-self-center flex-grow-1">Свободные</span>
-      <span class="expense-balance omb-text-body align-self-center">{{ freeMoney.amount | currency }} </span>
+      <span class="expense-balance omb-text-body align-self-center">{{ freeMoney.amount / 100 | currency }} </span>
     </div>
 
     <OmbItemList
@@ -23,7 +23,7 @@
 <script>
 
 import { mapState } from "vuex";
-import OmbItemList from "@/components/transaction/OmbItemList";
+import OmbItemList from "../../components/transaction/OmbItemList";
 
 export default {
   name: "ExpenseSelect2",
@@ -49,7 +49,8 @@ export default {
       return this.expenses.active
     },
     ...mapState(["expenses", "freeMoney"]),
-    ...mapState("transaction", ["transaction"])
+    ...mapState("transaction", ["transaction"]),
+    ...mapState("colors", ["colors"])
   },
   methods: {
     changeExpense(expense) {

@@ -5,6 +5,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 import * as transaction from '@/store/modules/transaction'
+import * as colors from '@/store/modules/colors'
 
 Vue.use(Vuex);
 
@@ -39,7 +40,8 @@ export default new Vuex.Store({
     },
   },
   modules: {
-    transaction
+    transaction,
+    colors
   },
   mutations: {
     auth_request(state){

@@ -148,9 +148,6 @@ export default {
   }
 
   .omb-form-input {
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
     padding: 0;
     //border-bottom: solid 1px $omb-color-tetriary !important;
     border: 0;
@@ -344,10 +341,7 @@ export default {
   }
 
   :focus-visible {
-    outline: -webkit-focus-ring-color auto 1px;
-    outline-color: -webkit-focus-ring-color;
-    outline-style: none;
-    outline-width: 0;
+    outline: -webkit-focus-ring-color none 0;
   }
 
   ::placeholder {
