@@ -1,5 +1,5 @@
 <template>
-    <div class="budgy-icon" :style="{backgroundColor: item.color ? '#' + item.color.hex : '#b9ecbb'}"></div>
+    <div class="budgy-icon align-self-center" :style="{backgroundColor: item.color ? '#' + item.color.hex : '#b9ecbb'}"></div>
 </template>
 
 <script>

@@ -7,22 +7,30 @@
         <router-link :to="{name: 'index', params: {transactionId: transaction.id}} " v-for="transaction in transactionDay.items" :key="transaction.id">
               <div class="budgy-list-item d-flex justify-content-between" @click="editTransaction(transaction)">
                 <BudgyItemIcon :item="getIconItem(transaction)"/>
-                <div class="budgy-name flex-grow-1 omb-text-body">
-                  <div> {{ transactionName(transaction)}}
-                  </div>
-                  <div class="budgy-category omb-text-caption omb-color-secondary" v-if="transaction.category">{{ transaction.category.name }}</div>
-                </div>
-                <div class="sum-account">
-                  <div class="transaction-amount" :class="getStyle(transaction.type)"><span v-if="transaction.type === 'income'">+</span>{{ formatAmount(transaction.amount, 2) }}</div>
-                  <div class="account-name omb-text-caption omb-color-secondary">
-                    <span v-if="transaction.account_source">{{ transaction.account_source.name }}</span>
-                    <span v-if="transaction.type === 'transfer' || transaction.type === 'saving'">
-                  <b-icon-arrow-right-short variant="primary"></b-icon-arrow-right-short>
-                </span>
-                    <span v-if="transaction.account_receiver">{{ transaction.account_receiver.name }}</span>
+                <div class="flex-grow-1" id="budgy-name">
+                  <div class="flex-grow-1 omb-text-body d-flex justify-content-between text-left">
+                    <div class="align-self-start">
+                      {{ transactionName(transaction)}}
+                    </div>
+                    <div class="transaction-amount" :class="getStyle(transaction.type)"><span v-if="transaction.type === 'income'">+</span>{{ transaction.amount | currency }}</div>
+
+
                   </div>
 
+                  <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                    <div class="account-name omb-text-caption omb-color-secondary">
+                      <span v-if="transaction.account_source">{{ transaction.account_source.name }}</span>
+                      <span v-if="transaction.type === 'transfer' || transaction.type === 'saving'">
+                        <b-icon-arrow-right-short variant="primary"></b-icon-arrow-right-short>
+                      </span>
+                      <span v-if="transaction.account_receiver">{{ transaction.account_receiver.name }}</span>
+                    </div>
+
+                    <div class="budgy-category omb-text-caption omb-color-secondary" v-if="transaction.type === 'expense'">{{ expenseName(transaction) }}</div>
+
+                  </div>
                 </div>
+
               </div>
             </router-link>
         </div>
@@ -46,6 +54,7 @@ export default {
   },
   methods: {
     fetchData() {
+      this.$store.dispatch("fetchExpenses", this.period.current.id);
       this.$store.dispatch("transaction/fetchTransactions", this.period.current.id);
       this.$store.dispatch('transaction/fetchTransactions2', { period: this.period.now, type: "id"})
     },
@@ -57,7 +66,6 @@ export default {
       return amount.toLocaleString('ru-RU', {style: 'currency', currency: 'RUB', maximumFractionDigits: maxFraction})
     },
     getIconItem(transaction){
-      // console.log(transaction)
       switch (transaction.type){
         case 'income':
           return {color: {
@@ -118,13 +126,20 @@ export default {
     editTransaction(transaction){
       console.log(transaction)
       // this.$router.push({'name': 'transaction-edit', params: {'transaction': transaction, 'transactionId': transaction.id.toString()}})
-    }
+    },
+    expenseName(transaction) {
+      if(transaction.expense){
+        return this.expenses.items[transaction.expense.id].name
+      } else {
+        return "со свободных"
+      }
+    },
   },
   watch: {
     '$store.state.period': 'fetchData'
   },
   computed: {
-    ...mapState(["period", "drawer"]),
+    ...mapState(["period", "drawer", "expenses"]),
     ...mapState("transaction", ['transactions'])
   }
 };
@@ -132,7 +147,6 @@ export default {
 
 <style scoped>
   .budgy-list-item {
-    height: 61px;
     color: black;
     text-decoration: none;
     padding: 12px 0;
@@ -152,20 +166,8 @@ export default {
 
   }
 
-  .budgy-name {
-    text-align: left;
-    padding-left: 8px;
-    padding-top: 5px;
-  }
-
-  .sum-account {
-    text-align: right;
-    padding-left: 8px;
-  }
-
-  .transaction-amount {
-    font-size: 16px;
-    padding-top: 5px;
+  #budgy-name {
+    margin-left: 8px;
   }
 
   .transaction-date {

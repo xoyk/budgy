@@ -1,14 +1,11 @@
 {
   "name": "budgy",
-  "version": "0.1.0",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
-  },
-  "module.exports": {
-    "baseUrl": "/"
   },
   "dependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
