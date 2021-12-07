@@ -8,7 +8,7 @@
         <OmbInput type="text" v-model="transaction.name" label="Куда потратили" id="name"></OmbInput>
       </div>
     </div>
-    <TransactionExpenseSelect :default="{name: 'Свободные', amount: freeMoney.amount }"></TransactionExpenseSelect>
+    <TransactionExpenseSelect :default="getDefault()"></TransactionExpenseSelect>
     <TransactionAccountSelect
         type="source"
         text="Как оплачиваем"
@@ -16,13 +16,11 @@
         v-if="accounts.default"
     />
     <div class="flex-grow-1"></div>
-    <TransactionButtons :buttons="buttons"></TransactionButtons>
   </div>
 </template>
 
 <script>
 import {mapState} from "vuex";
-import TransactionButtons from "../parts/TransactionButtons";
 import OmbInput from "../parts/OmbInput";
 import TransactionExpenseSelect from "../transaction/TransactionExpenseSelect";
 import TransactionAccountSelect from "../transaction/TransactionAccountSelect";
@@ -31,24 +29,9 @@ import TransactionAccountSelect from "../transaction/TransactionAccountSelect";
 export default {
   name: "ExpenseStart",
   components: {
-    TransactionButtons,
     OmbInput,
     TransactionExpenseSelect,
     TransactionAccountSelect
-  },
-  data() {
-    return {
-      buttons: {
-        button1: {
-          text: "Назад",
-          color: ""
-        },
-        button2: {
-          text: "Далее",
-          color: "",
-        },
-      }
-    }
   },
   created() {
     this.transaction.type = 'expense'
@@ -65,12 +48,11 @@ export default {
       this.$store.dispatch('fetchAccounts')
       this.$store.dispatch('fetchFreeMoney', this.period.now)
     },
-    saveTransaction(){
-      this.$store.dispatch('transaction/saveTransaction', this.transaction)
-      .then(() => {
-        this.$router.push({name: "transaction-success", params: {type: this.transaction.type} })
-      })
-      .catch(() => {});
+    getDefault(){
+      if(this.freeMoney.amount){
+        console.log(this.freeMoney.amount / 100)
+        return {name: 'Свободные', amount: (this.freeMoney.amount / 100) }
+      }
     }
   },
   watch: {
@@ -86,26 +68,7 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
-
 <style lang="scss" scoped>
-  button#transactionDate {
-    border-radius: 16px;
-    height: 52px;
-  }
-
-  .omb-grid-3 {
-    display: grid;
-    grid-template-rows: 144px 1fr;
-    row-gap: 16px;
-  }
-
-  input.active {
-    font-weight: bold;
-  }
-
   #inputs {
     row-gap: 16px;
   }

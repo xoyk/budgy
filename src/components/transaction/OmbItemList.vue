@@ -3,16 +3,21 @@
       class="item-list text-left d-flex justify-content-between"
       @click="clicked(item)"
   >
-    <div class="budgy-icon icon-expense"></div>
+    <BudgyItemIcon :item="item"/>
     <span class="item-list-name omb-text-body align-self-center flex-grow-1">{{ item.name }}</span>
-    <span class="expense-balance omb-text-body align-self-center">{{ item.amount | currency }}</span>
+    <span class="expense-balance omb-text-body align-self-center">{{ item.balance / 100 | currency }}</span>
   </div>
 </template>
 
 <script>
+import BudgyItemIcon from "../parts/BudgyItemIcon";
+
 export default {
   props: {
     item: Object
+  },
+  components: {
+    BudgyItemIcon
   },
   name: "OmbItemList",
   methods: {

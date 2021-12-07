@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between flex-column" v-if="savings.items">
+    <div class="d-flex justify-content-between flex-column" v-if="savings.active">
       <div
           class="item-list d-flex justify-content-between"
           :class="{ active : transaction.saving === saving.id }"
-          v-for="saving in savings.items.active"
+          v-for="saving in savings.active"
           :key="saving.id"
           @click="changeSaving(saving)"
       >
         <div>{{ saving.name }}</div>
-        <div>{{ saving.balance  }}</div>
+        <div>{{ saving.balance / 100 | currency  }}</div>
       </div>
 
     </div>
@@ -39,7 +39,7 @@ export default {
     changeSaving(saving) {
       this.currentSaving = saving.id
       this.transaction.saving = saving.id
-      this.transaction.amount = saving.amount
+      this.transaction.amount = saving.amount / 100
     },
   },
 };

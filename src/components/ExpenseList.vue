@@ -18,7 +18,7 @@
     >
       <thead class="thead-dark">
       <tr>
-        <th colspan="3">Расходы (итого: {{ expenses.total }})</th>
+        <th colspan="3">Расходы (итого: {{ expenses.total / 100 }})</th>
       </tr>
       </thead>
       <tbody>
@@ -29,7 +29,7 @@
       >
         <td data-cy="expense_name">{{ expense.name }}</td>
         <td class="expenseAmount" data-cy="expense_amount">
-          {{ expense.amount }} / {{ expense.balance }}
+          {{ expense.amount / 100 }} / {{ expense.balance / 100 }}
         </td>
         <td v-if="editable" v-b-modal="'planModalexpense'" @click="setData(expense)">...</td>
       </tr>
@@ -40,7 +40,7 @@
       >
         <td data-cy="expense_name">{{ expense.name }}</td>
         <td class="expenseAmount" data-cy="expense_amount">
-          {{ expense.amount }} / {{ expense.balance }}
+          {{ expense.amount / 100 }} / {{ expense.balance / 100 }}
         </td>
         <td v-if="editable" v-b-modal="'planModalexpense'" @click="setData(expense)">...</td>
       </tr>

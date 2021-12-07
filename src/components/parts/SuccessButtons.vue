@@ -10,7 +10,7 @@
 
 import Buttons from "./Buttons";
 export default {
-  name: "TransactionButtons",
+  name: "SuccessButtons",
   props: {
     buttons: Object
   },

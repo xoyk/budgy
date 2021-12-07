@@ -1,7 +1,7 @@
 <template>
   <div>
     <SectionHeader text="Откуда списываем"></SectionHeader>
-    <OmbSelect :title="name" :amount="amount" v-on:clicked="showExpenses"></OmbSelect>
+    <OmbSelect :title="name" :amount="amount" v-on:clicked="showExpenses" :color="getColor()"></OmbSelect>
   </div>
 </template>
 
@@ -12,9 +12,7 @@ import SectionHeader from "../parts/SectionHeader";
 
 export default {
   props: {
-    default: {
-      amount: 0
-    }
+    default: Object
   },
   name: "TransactionExpenseSelect",
   components: {
@@ -24,7 +22,15 @@ export default {
   methods: {
     showExpenses() {
       this.$router.push('/transaction/new/expense')
-    }
+    },
+    getColor() {
+
+      if(this.transaction.transaction.expense){
+        return this.expenses.items[this.transaction.transaction.expense].color.hex
+      } else {
+        return "F5F5F5"
+      }
+    },
   },
   computed: {
     name() {
@@ -41,7 +47,6 @@ export default {
       } else {
         return this.freeMoney.amount
       }
-
     },
     ...mapState({
       transaction: state => state.transaction,

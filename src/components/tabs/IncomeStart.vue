@@ -3,7 +3,7 @@
     <div>
       <IncomeSelect2></IncomeSelect2>
     </div>
-    <div id="new-income-button" class="item-list d-flex flex-column" @click="add">
+    <div id="new-income-button" class="item-list d-flex flex-column omb-margin-bottom" @click="add">
       <div>
         Другой доход <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 5V19" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -25,8 +25,6 @@
     </div>
 
     <div class="flex-grow-1"></div>
-
-    <TransactionButtons :buttons="buttons"></TransactionButtons>
   </div>
 </template>
 
@@ -36,29 +34,16 @@ import {mapState} from "vuex";
 import IncomeSelect2 from "../selects/IncomeSelect2";
 import OmbInput from "../parts/OmbInput";
 import TransactionAccountSelect from "../transaction/TransactionAccountSelect";
-import TransactionButtons from "../parts/TransactionButtons";
 
 export default {
   name: "IncomeStart",
   components: {
     IncomeSelect2,
     OmbInput,
-    TransactionAccountSelect,
-    TransactionButtons
+    TransactionAccountSelect
   },
   data() {
     return {
-      buttons: {
-        button1: {
-          text: "Отменить",
-          color: ""
-        },
-        button2: {
-          text: "Добавить",
-          color: "",
-          router: this.router
-        },
-      },
       newIncome: false,
       showAmount: false
     }
@@ -69,21 +54,6 @@ export default {
   methods: {
     fetchData() {
       this.$store.dispatch('fetchIncomes', this.period.now)
-    },
-    cancel() {
-      // TODO: КОПИПАСТА
-      this.$router.push({name: "index"})
-      this.$store.dispatch("transaction/clearTransaction")
-    },
-    save() {
-      event.preventDefault();
-      this.$store
-          .dispatch("transaction/saveTransaction", this.transaction)
-          .then(() => {
-            this.$store.dispatch("transaction/clearTransaction")
-            this.$router.push({name: "index"})
-          })
-          .catch(() => {});
     },
     add() {
       this.newIncome = true

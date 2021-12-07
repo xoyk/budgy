@@ -10,7 +10,6 @@
       />
       <TransactionAccountSelect text="На какой счет сохраняем" type="receiver" :default="accounts.default" v-if="accounts.default"></TransactionAccountSelect>
       <div class="flex-grow-1"></div>
-      <TransactionButtons :buttons="buttons"></TransactionButtons>
   </div>
 </template>
 
@@ -18,32 +17,15 @@
 import {mapState} from "vuex";
 import SavingSelect2 from "../selects/SavingSelect2";
 import TransactionAccountSelect from "../transaction/TransactionAccountSelect";
-import TransactionButtons from "../parts/TransactionButtons";
 
 export default {
   name: "SavingDrawerTab",
   components: {
     TransactionAccountSelect,
-    SavingSelect2,
-    TransactionButtons
+    SavingSelect2
   },
   props: {
     form: Object
-  },
-  data() {
-    return {
-      buttons: {
-        button1: {
-          text: "Отменить",
-          color: ""
-        },
-        button2: {
-          text: "Добавить",
-          color: "",
-          router: this.router
-        },
-      }
-    }
   },
   created() {
     this.transaction.transactionType = 'saving'
@@ -54,21 +36,6 @@ export default {
     fetchData() {
       this.$store.dispatch('fetchSavings', this.period.now)
     },
-    cancel() {
-      // TODO: КОПИПАСТА
-      this.$router.push({name: "index"})
-      this.$store.dispatch("transaction/clearTransaction")
-    },
-    save() {
-      event.preventDefault();
-      this.$store
-          .dispatch("transaction/saveTransaction", this.transaction)
-          .then(() => {
-            this.$store.dispatch("transaction/clearTransaction")
-            this.$router.push({name: "index"})
-          })
-          .catch(() => {});
-    }
   },
   watch: {
     '$store.state.period': 'fetchData'

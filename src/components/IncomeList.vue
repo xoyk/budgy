@@ -17,28 +17,28 @@
       <thead class="thead-dark">
       <tr>
         <th colspan="3">
-          Доходы (итого: {{ incomes.total }})
+          Доходы (итого: {{ incomes.total / 100 }})
         </th>
       </tr>
       </thead>
       <tbody id="income_table">
       <tr
           data-cy="income_row"
-          v-for="income in incomes.items.active"
+          v-for="income in incomes.active"
           :key="income.id"
       >
         <td data-cy="income_name"><span v-if="income.received">✅ </span>{{income.name}}</td>
-        <td data-cy="income_amount">{{ income.amount }}</td>
+        <td data-cy="income_amount">{{ income.amount / 100 }}</td>
         <td v-if="editable" v-b-modal="'planModalincome'" @click="setData(income)">...</td>
       </tr>
       <tr
           data-cy="income_row"
-          v-for="income in incomes.items.received"
+          v-for="income in incomes.received"
           :key="income.id"
           class="table-secondary"
       >
         <td data-cy="income_name"><span v-if="income.received">✅ </span>{{income.name}}</td>
-        <td data-cy="income_amount">{{ income.amount }}</td>
+        <td data-cy="income_amount">{{ income.amount / 100 }}</td>
         <td v-if="editable" v-b-modal="'planModalincome'" @click="setData(income)">...</td>
       </tr>
       </tbody>

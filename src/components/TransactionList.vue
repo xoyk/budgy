@@ -4,9 +4,9 @@
       <div v-for="transactionDay in transactions"
            :key="transactionDay.day" class="budgy-list-group d-flex flex-column">
         <div class="transaction-date omb-text-title">{{ formatDate(transactionDay.day) }}</div>
-        <router-link :to="{name: 'transaction-edit', params: {transactionId: transaction.id}} " v-for="transaction in transactionDay.items" :key="transaction.id">
+        <router-link :to="{name: 'index', params: {transactionId: transaction.id}} " v-for="transaction in transactionDay.items" :key="transaction.id">
               <div class="budgy-list-item d-flex justify-content-between" @click="editTransaction(transaction)">
-                <div :class="'budgy-icon icon-' + transaction.type"></div>
+                <BudgyItemIcon :item="getIconItem(transaction)"/>
                 <div class="budgy-name flex-grow-1 omb-text-body">
                   <div> {{ transactionName(transaction)}}
                   </div>
@@ -33,9 +33,13 @@
 <script>
 import { mapState } from "vuex";
 import moment from 'moment';
+import BudgyItemIcon from "./parts/BudgyItemIcon";
 
 export default {
   name: "TransactionList",
+  components: {
+    BudgyItemIcon
+  },
   created() {
     this.fetchData()
     this.$store.dispatch("setButtonState", {type: "add", status: true})
@@ -51,6 +55,38 @@ export default {
     },
     formatAmount(amount, maxFraction = 0) {
       return amount.toLocaleString('ru-RU', {style: 'currency', currency: 'RUB', maximumFractionDigits: maxFraction})
+    },
+    getIconItem(transaction){
+      // console.log(transaction)
+      switch (transaction.type){
+        case 'income':
+          return {color: {
+              hex: "C8FADC"
+            }
+          }
+        case 'saving': {
+          return {color: {
+              hex: "FAF1AF"
+            }
+          }
+        }
+        case 'transfer': {
+          return {color: {
+              hex: "C8F7FA"
+            }
+          }
+        }
+        case 'expense': {
+          if(transaction.expense){
+            return transaction.expense
+          } else {
+            return {color: {
+                hex: "F5F5F5"
+              }
+            }
+          }
+        }
+      }
     },
     getStyle(type){
       if(type === 'income'){
@@ -80,7 +116,8 @@ export default {
       return "Транзакция"
     },
     editTransaction(transaction){
-      this.$router.push({'name': 'transaction-edit', params: {'transaction': transaction, 'transactionId': transaction.id.toString()}})
+      console.log(transaction)
+      // this.$router.push({'name': 'transaction-edit', params: {'transaction': transaction, 'transactionId': transaction.id.toString()}})
     }
   },
   watch: {
@@ -113,18 +150,6 @@ export default {
 
   .budgy-list-group {
 
-  }
-
-  .icon-income {
-    background-color: #D5FAC8;
-  }
-
-  .icon-transfer {
-    background-color: #E2D9FF;
-  }
-
-  .icon-saving {
-    background-color: #C8F7FA;
   }
 
   .budgy-name {

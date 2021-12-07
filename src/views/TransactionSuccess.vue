@@ -1,41 +1,41 @@
 <template>
-  <div class="d-flex flex-column omb-margin-1" id="flex-0">
-    <div id="flex-1">
-        <div class="d-flex">
-            <button class="budgy-icon-button" @click="cancel">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-        </div>
-    </div>
-
-    <div class="transaction-date omb-text-body omb-color-secondary" id="flex-2">
+  <div class="d-flex flex-column omb-margin-1 omb-layout-height100">
+    <div class="transaction-date omb-text-body omb-color-secondary d-flex" id="flex-2">
       <div>{{ formatDate(transaction.date) }}</div>
     </div>
 
     <div id="flex-5" class="flex-grow-1 d-flex">
-      <ExpenseSuccess></ExpenseSuccess>
+      <ExpenseSuccess v-if="transaction.type === 'expense'"></ExpenseSuccess>
+      <IncomeSuccess v-if="transaction.type === 'income'"></IncomeSuccess>
+      <SavingSuccess v-if="transaction.type === 'saving'"></SavingSuccess>
+      <TransferSuccess v-if="transaction.type === 'transfer'"></TransferSuccess>
     </div>
 
-    <div class="drawer-buttons d-flex justify-content-between" id="flex-4">
-      <router-link :to="router" class="d-flex flex-grow-1" v-if="!transaction.account.source">
-        <button class="flex-grow-1 omb-button-primary">{{ buttons.button2.text }}</button>
-      </router-link>
-      <div class="d-flex flex-grow-1" v-else>
-        <button class="flex-grow-1 omb-button-primary" @click="nextStep">{{ buttons.button2.text }}</button>
-      </div>
-    </div>
+    <SuccessButtons :buttons="buttons" v-on:clicked="ok()"></SuccessButtons>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import ExpenseSuccess from "../components/steps/ExpenseSuccess";
+import IncomeSuccess from "../components/steps/IncomeSuccess";
+import SavingSuccess from "../components/steps/SavingSuccess";
 import moment from "moment";
+import SuccessButtons from "../components/parts/SuccessButtons";
+import TransferSuccess from "../components/steps/TransferSuccess";
 
 export default {
+  props: {
+    transactionId: String
+  },
   name: "TransactionSuccess",
+  components: {
+    SavingSuccess,
+    ExpenseSuccess,
+    IncomeSuccess,
+    SuccessButtons,
+    TransferSuccess
+  },
   data() {
     return {
       settings: {
@@ -44,21 +44,12 @@ export default {
         mode: ""
       },
       buttons: {
-        button1: {
-          text: "Ещё транзакция"
-        },
         button2: {
           text: "Отлично"
         }
       },
       formatted: moment(Date.now()).format("[Сегодня], DD MMMM"),
     }
-  },
-  props: {
-    transactionId: String
-  },
-  components: {
-    ExpenseSuccess
   },
   watch: {
     '$store.state.period': 'fetchData'
@@ -90,18 +81,7 @@ export default {
       this.$store.dispatch("fetchAccounts", this.period.now)
       this.$store.dispatch("fetchExpenses", this.period.now)
     },
-    isActive(tabCode) {
-      if(tabCode === this.transaction.transactionType)
-        return "active omb-color-primary"
-    },
-    cancel(){
-      this.$store.dispatch("transaction/clearTransaction")
-      this.$router.push({ name: "index"})
-    },
-    newItem() {
-      return this.router
-    },
-    nextStep(){
+    ok(){
       this.$store.dispatch("transaction/clearTransaction")
       this.$router.push({ name: "index"})
     },
@@ -125,7 +105,7 @@ export default {
       return { name: 'transaction', params: { transactionId: "new"}}
     },
     ...mapState("transaction", ["transaction"]),
-    ...mapState(["period", "tabs"]),
+    ...mapState(["period"]),
   }
 };
 </script>
@@ -133,13 +113,6 @@ export default {
 <style lang="scss">
   @import "../assets/custom.scss";
   #flex-0 {
-    /*display: grid;*/
-    /*!*grid-template-rows: [back-button] auto [transaction-date] auto [success-text] auto [image-part] 1fr [buttons] auto;*!*/
-    /*grid-template-rows: [back-button] 25px [transaction-date] 30px [success-text] 80px [image-part] 1fr [buttons] auto;*/
-    /*grid-template-columns: 100%;*/
-    /*align-content: stretch;*/
-    /*min-height: 100vh;*/
-    /*padding-top: 24px;*/
     height: 100vh;
   }
 
@@ -149,6 +122,8 @@ export default {
 
   #flex-2 {
     align-self: center;
+    align-items: center;
+    height: 43px;
   }
 
   #flex-4 {

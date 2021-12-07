@@ -39,6 +39,7 @@
         <SavingDrawerTab v-if="transaction.transactionType === 'saving'"></SavingDrawerTab>
         <TransferDrawerTab v-if="transaction.transactionType === 'transfer'"></TransferDrawerTab>
     </div>
+    <TransactionButtons :buttons="buttons" v-on:clicked="saveTransaction()"></TransactionButtons>
   </div>
 </template>
 
@@ -50,6 +51,7 @@ import SavingDrawerTab from "../components/tabs/SavingDrawerTab";
 import TransferDrawerTab from "../components/tabs/TransferDrawerTab";
 import TransactionTypeSelect from "../components/transaction/TransactionTypeSelect";
 import BackButton from "../components/parts/BackButton";
+import TransactionButtons from "../components/parts/TransactionButtons";
 
 import moment from "moment";
 export default {
@@ -61,7 +63,13 @@ export default {
         show: true,
         mode: ""
       },
-      formatted: ""
+      formatted: "",
+      buttons: {
+        button2: {
+          text: "Сохранить",
+          color: "",
+        },
+      }
     }
   },
   props: {
@@ -73,7 +81,8 @@ export default {
     TransferDrawerTab,
     ExpenseStart,
     TransactionTypeSelect,
-    BackButton
+    BackButton,
+    TransactionButtons
   },
   created() {
     this.settings.transactionId = this.transactionId
@@ -106,6 +115,13 @@ export default {
         return "active"
       }
     },
+    saveTransaction(){
+      this.$store.dispatch('transaction/saveTransaction', this.transaction)
+          .then(() => {
+            this.$router.push({name: "transaction-success", params: {type: this.transaction.type} })
+          })
+          .catch(() => {});
+    },
     onContext(ctx) {
       moment.locale('ru')
       // The date formatted in the locale, or the `label-no-date-selected` string
@@ -124,7 +140,7 @@ export default {
     ...mapState({
       transaction: state => state.transaction.transaction
     }),
-    ...mapState(["period", "buttons"]),
+    ...mapState(["period"]),
   }
 };
 </script>

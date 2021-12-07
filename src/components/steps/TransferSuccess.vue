@@ -2,31 +2,30 @@
       <div class="d-flex flex-column flex-grow-1">
         <div class="transaction-title omb-text-headline">
           <span>
-            Ура! Добавлен новый расход<br> «{{ item.name }}»
+            Ура! Добавлен новый трансфер
           </span>
         </div>
         <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
-          <div class="transaction-avatar d-flex justify-content-center flex-grow-1" :style="{backgroundColor: item.color ? '#' + item.color.hex : 'rgba(0, 255, 91, 0.3)'}">
+          <div class="transaction-avatar d-flex justify-content-center flex-grow-1">
             <img src="/assets/man.svg" alt="Expense-image"/>
           </div>
-          <div class="omb-text-headline-super">{{ parseInt(transaction.amount) | currency }}</div>
+          <div class="omb-text-headline-super">{{ transactionAmount | currency }}</div>
         </div>
 
         <div id="flex-5" class="d-flex justify-content-between omb-margin-4 flex-column">
           <div class="d-flex justify-content-between">
-            <span id="expense-name">{{ item.name }}</span>
+            <span id="account-name">{{ accounts.items[transaction.account.source].name }}</span>
             <div>
-              <span class="balance-prev">{{ itemPrev | currency }}</span>
-              <span>{{ expenseAmount / 100 | currency }}</span>
+              <span class="balance-prev">{{ accountSourcePrev | currency }}</span>
+              <span>{{ accountSourceAmount | currency }}</span>
             </div>
           </div>
           <div class="d-flex justify-content-between">
 
-            <span id="account-name">{{ accounts.items[transaction.account.source].name }}</span>
-
+            <span>{{ accounts.items[transaction.account.receiver].name }}</span>
             <div>
-              <span class="balance-prev">{{ accountNext | currency }}</span>
-              <span>{{ accountAmount | currency }}</span>
+              <span class="balance-prev">{{ accountReceiverPrev | currency }}</span>
+              <span>{{ accountReceiverAmount | currency }}</span>
             </div>
           </div>
         </div>
@@ -37,10 +36,9 @@
 import {mapState} from "vuex";
 
 export default {
-  name: "ExpenseSuccess",
+  name: "TransferSuccess",
   methods: {
     fetchData() {
-      this.$store.dispatch('fetchExpenses', this.period.now)
       this.$store.dispatch('fetchAccounts')
     },
   },
@@ -48,44 +46,43 @@ export default {
     '$store.state.period': 'fetchData'
   },
   computed: {
-    ...mapState(["expenses", "incomes", "savings", "period", "accounts", "freeMoney"]),
+    ...mapState(["period", "accounts"]),
     ...mapState("transaction", ["transaction"]),
     item() {
-      if(this.transaction.expense){
-        if(!this.$store.state.expenses){
-          this.$store.dispatch('fetchExpenses', this.period.now)
-          return this.expenses.items[this.transaction.expense]
-        } else {
-          return this.expenses.items[this.transaction.expense]
-        }
+      if(this.transaction.saving){
+        this.$store.dispatch('fetchSavings', this.period.now)
+        console.log(this.savings.items)
+        return this.savings.items[this.transaction.saving]
       } else {
-        return {
-          name: " из свободных",
-          amount: this.freeMoney.amount - (parseInt(this.transaction.amount) * 100)
-        }
+        return {name: "Прочие накопления"}
       }
     },
-    expenseAmount() {
+    itemAmount() {
       let result
-      if(this.transaction.expense){
-        result = this.item.balance - (parseInt(this.transaction.amount) * 100)
-      } else {
-        result = this.freeMoney.amount - (parseInt(this.transaction.amount) * 100)
+      if(this.item){
+        result = (this.item.amount - parseInt(this.transaction.amount) * 100) / 100
       }
       return result
     },
     itemPrev() {
-        if(this.transaction.expense){
-          return this.item.balance / 100
-        } else {
-          return this.freeMoney.amount / 100
-        }
+      if(this.item){
+        return this.item.amount / 100
+      } else {
+        return ""
+      }
+
     },
-    accountNext() {
-      return this.accounts.items[this.transaction.account.source].balance/100
+    accountReceiverPrev() {
+      return this.accounts.items[this.transaction.account.receiver].balance / 100
     },
-    accountAmount(){
+    accountSourcePrev() {
+      return this.accounts.items[this.transaction.account.source].balance / 100
+    },
+    accountSourceAmount(){
       return this.accounts.items[this.transaction.account.source].balance/100 - parseInt(this.transaction.amount)
+    },
+    accountReceiverAmount(){
+      return this.accounts.items[this.transaction.account.receiver].balance/100 + parseInt(this.transaction.amount)
     },
     incomeName(){
       console.log(this.transaction.income)
@@ -98,12 +95,8 @@ export default {
         return "Прочие доходы"
       }
     },
-    expenseName(){
-      if(this.transaction.expense){
-        return '"' + this.expense.name + '"'
-      } else {
-        return "из свободных"
-      }
+    transactionAmount() {
+      return parseInt(this.transaction.amount)
     }
   }
 };

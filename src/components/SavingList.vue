@@ -17,29 +17,29 @@
     >
       <thead class="thead-dark">
       <tr>
-        <th colspan="3">Сбережения (итого: {{savings.total }})</th>
+        <th colspan="3">Сбережения (итого: {{(savings.total / 100) | currency }})</th>
       </tr>
       </thead>
       <tbody>
       <tr
           class="savingRow saving_spent table-warning"
-          v-for="saving in savings.items.active"
+          v-for="saving in savings.active"
           :key="saving.id"
       >
         <td data-cy="saving_name">{{ saving.name }}</td>
         <td class="savingAmount" data-cy="saving_amount">
-          {{ saving.amount }} / {{ saving.balance }}
+          {{ (saving.amount / 100) | currency }} / {{ (saving.balance / 100) | currency }}
         </td>
         <td v-if="editable" v-b-modal="'planModalsaving'" @click="setData(saving)">...</td>
       </tr>
       <tr
           class="savingRow saving_spent table-secondary"
-          v-for="saving in savings.items.spend"
+          v-for="saving in savings.spend"
           :key="saving.id"
       >
         <td data-cy="saving_name">{{ saving.name }}</td>
         <td class="savingAmount" data-cy="saving_amount">
-          {{ saving.amount }} / {{ saving.balance }}
+          {{ (saving.amount / 100) | currency }} / {{ (saving.balance / 100) | currency }}
         </td>
         <td v-if="editable" v-b-modal="'planModalsaving'" @click="setData(saving)">...</td>
       </tr>
