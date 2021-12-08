@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
     <div>
-        <OmbInput type="number" v-model="transaction.amount" label="Сумма" id="amount"></OmbInput>
+        <OmbInput type="text" v-model="transaction.amount" label="Сумма" id="amount"></OmbInput>
     </div>
     <div>
       <TransactionAccountSelect text="Откуда переводим" type="source" :default="accounts.default" v-if="accounts.default"></TransactionAccountSelect>

@@ -13,7 +13,7 @@
         </div>
 
         <div id="flex-5" class="d-flex justify-content-between omb-margin-4 flex-column">
-          <div class="d-flex flex-column">
+          <div class="d-flex flex-column" v-if="transaction.income">
             <span id="expense-name">{{ item.name }}</span>
             <div>
               <span class="balance-prev">{{ itemPrev | currency }}</span>
@@ -64,13 +64,12 @@ export default {
     },
     itemAmount() {
       let result
-      console.log('getting item amount, sir!')
       if(this.item){
-        console.log('found local item object, sir!')
-        result = (this.item.amount - parseInt(this.transaction.amount)) / 100
-      } else {
-        console.log('there is no local ojbect, sir!')
-        result = this.freeMoney.amount / 100 - parseInt(this.transaction.amount)
+        if(this.item.amount) {
+          result = (this.item.amount - parseInt(this.transaction.amount) * 100) / 100
+        } else {
+          result = ""
+        }
       }
       return result
     },

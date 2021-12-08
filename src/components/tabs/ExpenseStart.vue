@@ -2,7 +2,7 @@
   <div class="d-flex flex-column flex-grow-1">
     <div class="d-flex flex-column" id="inputs">
       <div class="omb-margin-bottom">
-        <OmbInput type="number" v-model="transaction.amount" label="Сумма" id="amount"></OmbInput>
+        <OmbInput type="text" v-model="transaction.amount" label="Сумма" id="amount"></OmbInput>
       </div>
       <div>
         <OmbInput type="text" v-model="transaction.name" label="Куда потратили" id="name"></OmbInput>

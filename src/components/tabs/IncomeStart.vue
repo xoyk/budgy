@@ -14,7 +14,7 @@
     </div>
     <div v-if="newIncome">
       <div class="omb-margin-bottom">
-        <OmbInput type="number" v-model="transaction.amount" label="Сумма" id="amount"></OmbInput>
+        <OmbInput type="text" v-model="transaction.amount" label="Сумма" id="amount"></OmbInput>
       </div>
       <div>
         <OmbInput type="text" v-model="transaction.name" label="Что за доход?" id="name"></OmbInput>

@@ -5,7 +5,6 @@
           :id="id"
           :type="type"
           class="omb-form-input flex-grow-1"
-          :placeholder="placeholder"
           v-bind:value="value"
           required
           v-on:input="$emit('input', $event.target.value)"
