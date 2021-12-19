@@ -8,9 +8,9 @@ export const state = {
     name: "",
     type: "expense",
     amount: "",
-    // expense: "",
-    // saving: "",
-    // income: "",
+    expense: "",
+    saving: "",
+    income: "",
     account: {
       source: "",
       receiver: ""

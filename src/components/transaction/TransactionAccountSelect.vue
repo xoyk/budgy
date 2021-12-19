@@ -14,11 +14,6 @@ export default {
   props: {
     text: String,
     type: String,
-    default: {
-      name: "",
-      balance: "",
-      id: ""
-    }
   },
   name: "TransactionAccountSelect",
   components: {

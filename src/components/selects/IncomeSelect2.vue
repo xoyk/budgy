@@ -3,7 +3,7 @@
     <div id="income-list" class="d-flex flex-column" v-if="incomes.active">
       <div
           class="item-list d-flex justify-content-between"
-          :class="{ active : transaction.income === income.id }"
+          :class="{ active : transaction.income.id === income.id }"
           v-for="income in incomes.active"
           :key="income.id"
           @click="changeIncome(income)"
@@ -32,8 +32,8 @@ export default {
   },
   methods: {
     changeIncome(income) {
-      if(this.transaction.income !== income.id) {
-        this.transaction.income = income.id
+      if(this.transaction.income.id !== income.id) {
+        this.transaction.income = income
         this.transaction.name = this.incomes.active[income.id].name
         this.transaction.amount = income.amount / 100
       } else {

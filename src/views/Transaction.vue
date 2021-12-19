@@ -102,12 +102,6 @@ export default {
 
     this.formatted = this.transaction.date ? this.transaction.date : moment(Date.now()).format("[Сегодня, ]YYYY-MM-DD")
 
-    if(this.transactionId !== "new"){
-      this.$store.dispatch("transaction/fetchTransaction", this.transactionId)
-    } else {
-      this.$store.dispatch("fetchPeriod", "current")
-    }
-
     if(this.$store.state.buttons.add){
       this.$store.dispatch("setButtonState", {type: "add", status: false})
     }

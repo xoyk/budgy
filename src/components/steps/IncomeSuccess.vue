@@ -16,8 +16,8 @@
           <div class="d-flex flex-column" v-if="transaction.income">
             <span id="expense-name">{{ transaction.name }}</span>
             <div>
-              <span class="balance-prev">{{ itemPrev | currency }}</span>
-              <span>{{ itemAmount | currency }}</span>
+              <span class="balance-prev">{{ incomePrev | currency }}</span>
+              <span>{{ incomeAmount | currency }}</span>
             </div>
           </div>
           <div class="d-flex flex-column">
@@ -62,44 +62,39 @@ export default {
           return {name: "Прочие доходы"}
         }
     },
-    itemAmount() {
+    incomeAmount() {
       let result
-      if(this.item){
-        if(this.item.amount) {
-          result = (this.item.amount - parseInt(this.transaction.amount) * 100) / 100
+      if(this.transaction.income.id){
+        if(this.transaction.income.amount) {
+          result = (this.transaction.income.amount - parseInt(this.transaction.amount) * 100) / 100
         } else {
           result = ""
         }
       }
       return result
     },
-    itemPrev() {
-      if(this.item){
-        return this.item.amount / 100
+    incomePrev() {
+      if(this.transaction.income.id){
+        return this.incomes.items[this.transaction.income.id].amount / 100
       } else {
         return ""
       }
-
     },
     accountPrev() {
       return this.accounts.items[this.transaction.account.receiver.id].balance / 100
     },
     accountAmount(){
-      return (this.accounts.items[this.transaction.account.receiver.id].balance - (parseFloat(this.transaction.amount.toString().replace(/,/g, '.')) * 100)) / 100
+      return (this.accounts.items[this.transaction.account.receiver.id].balance + (parseFloat(this.transaction.amount.toString().replace(/,/g, '.')) * 100)) / 100
     },
     incomeName(){
-      console.log(this.transaction.income)
-      console.log(this.incomes.items)
-      console.log(this.incomes.items[this.transaction.income])
-      console.log(this.incomes.items[this.transaction.income]['name'])
-      if(this.transaction.income){
-        return this.incomes.items[this.transaction.income]['name']
+      if(this.transaction.income.id){
+        return this.transaction.income.name
       } else {
         return "Прочие доходы"
       }
     },
     transactionAmount() {
-      return parseFloat(this.transaction.amount.replace(/,/g, '.'))
+      return parseFloat(this.transaction.amount.toString().replace(/,/g, '.'))
     }
   }
 };
