@@ -55,11 +55,6 @@ export default {
     '$store.state.period': 'fetchData'
   },
   created() {
-
-    if(this.transaction.type === 'expense'){
-      console.log(this.transaction.type)
-    }
-
     // this.settings.transactionId = this.transactionId
 
     // if(this.transactionId !== "new"){
@@ -104,7 +99,9 @@ export default {
     router () {
       return { name: 'transaction', params: { transactionId: "new"}}
     },
-    ...mapState("transaction", ["transaction"]),
+    ...mapState({
+      transaction: state => state.transaction.transaction
+    }),
     ...mapState(["period"]),
   }
 };

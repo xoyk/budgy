@@ -7,6 +7,7 @@
         v-on:clicked="changeAccount(item)"
     >
     </OmbItemList>
+    <hr>
     <OmbItemList
         v-for="item in accounts.saving"
         :key="item.id"
@@ -56,7 +57,7 @@ export default {
   },
   methods: {
     changeAccount(account) {
-      this.$store.dispatch("transaction/setTransactionAccount", {account: account.id, type: this.accountType})
+      this.$store.dispatch("transaction/setTransactionAccount", {account: account, type: this.accountType})
       this.$router.go(-1)
     },
     scrollToElement(id) {

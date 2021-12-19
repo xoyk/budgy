@@ -30,9 +30,6 @@ export default {
   components: {
     OmbItemList
   },
-  props: {
-    accountType: String
-  },
   data() {
     return {
       regular: [],
@@ -49,15 +46,14 @@ export default {
       return this.expenses.active
     },
     ...mapState(["expenses", "freeMoney"]),
-    ...mapState("transaction", ["transaction"]),
-    ...mapState("colors", ["colors"])
+    ...mapState("transaction", ["transaction"])
   },
   methods: {
     changeExpense(expense) {
       if(expense == null){
         this.transaction.expense = ""
       } else {
-        this.transaction.expense = expense.id
+        this.transaction.expense = expense
       }
 
       this.$router.go(-1)

@@ -6,13 +6,11 @@ export const state = {
   transaction: {
     date: "",
     name: "",
-    transactionType: "expense",
     type: "expense",
     amount: "",
-    expense: "",
-    saving: "",
-    income: "",
-    category: "",
+    // expense: "",
+    // saving: "",
+    // income: "",
     account: {
       source: "",
       receiver: ""
@@ -21,11 +19,9 @@ export const state = {
   transactions: [],
   transactions2: {
     current: {},
-    type: {},
-    date: {},
-    id: {
-      items: []
-    }
+    // type: {}, // TODO show transaction of one type only, "show me expense transactions"
+    day: {},
+    id: {}
   },
   tabs: [
     {
@@ -60,7 +56,7 @@ export const mutations = {
     state.transaction = transaction
   },
   SET_TRANSACTIONS(state, transactions) {
-    state.transactions = transactions;
+    state.transactions = transactions
   },
   SET_TRANSACTIONS2(state, payload) {
     state.transactions2[payload.type] = payload.transactions;
@@ -96,25 +92,28 @@ export const mutations = {
 
 export const actions = {
   fetchTransaction({ commit, getters }, id) {
-    var transaction = getters.getTransactionById(id)
+      let transaction = getters.getTransactionById(id)
 
-    if (transaction) {
-      commit("SET_TRANSACTION", transaction)
-      commit("SET_CURRENT_PERIOD", transaction.period)
-    } else {
-      BudgyService.getTransaction(id)
-        .then(response => {
-          commit("SET_TRANSACTION", response.data.data)
-        })
-        .catch(error => {
-          // const notification = {
-          //   type: "error",
-          //   message: "There was a problem fetching event: " + error.message
-          // };
-          console.log("There was a problem fetching event: " + error.message)
-          // dispatch("notification/add", notification, { root: true })
-        });
-    }
+      if (transaction) {
+        transaction.amount = transaction.amount.toString()
+        commit("SET_TRANSACTION", transaction)
+      } else {
+        BudgyService.getTransaction(id)
+          .then(response => {
+            transaction = response.data.data
+            transaction.amount = transaction.amount.toString()
+
+            commit("SET_TRANSACTION", transaction)
+          })
+          .catch(error => {
+            // const notification = {
+            //   type: "error",
+            //   message: "There was a problem fetching event: " + error.message
+            // };
+            console.log("There was a problem fetching event: " + error.message)
+            // dispatch("notification/add", notification, { root: true })
+          });
+      }
   },
   fetchTransactions({ commit }, period) {
     BudgyService.getTransactions(period)
@@ -126,14 +125,18 @@ export const actions = {
       });
   },
   fetchTransactions2({ commit }, {period, type }) {
-    BudgyService.getTransactions2(period, type)
-      .then(response => {
-        commit("SET_TRANSACTIONS2", {transactions: response.data, type: type});
-      })
-      .catch(error => {
-        console.log(error, "error")
-        console.log("There was an error:", error.response.data.detail);
-      });
+    return new Promise((resolve, reject) => {
+      BudgyService.getTransactions2(period, type)
+        .then(response => {
+          commit("SET_TRANSACTIONS2", {transactions: response.data, type: type});
+          resolve()
+        })
+        .catch(error => {
+          console.log(error, "error")
+          console.log("There was an error:", error.response.data.detail);
+          reject()
+        });
+    })
   },
   setTransaction({ commit }, { transaction }){
     commit("SET_TRANSACTION", transaction)
@@ -158,10 +161,10 @@ export const actions = {
 
 export const getters = {
   getTransactionById: state => id => {
-    if(state.transactions2.id.items !== undefined){
-      return state.transactions2.id.items[id]
+    if(state.transactions2.id !== undefined){
+      return state.transactions2.id[id]
     } else {
-      this.fetchTransactions2({period: "current", type: "id"})
+      console.log('cant find transaction, srry')
     }
   }
 }

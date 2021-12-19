@@ -2,30 +2,30 @@
       <div class="d-flex flex-column flex-grow-1">
         <div class="transaction-title omb-text-headline">
           <span>
-            Ура! Добавлен новый расход<br> «{{ item.name }}»
+            Ура! Добавлен новый расход<br> «{{ transaction.name }}»
           </span>
         </div>
         <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
           <div class="transaction-avatar d-flex justify-content-center flex-grow-1" :style="{backgroundColor: item.color ? '#' + item.color.hex : 'rgba(0, 255, 91, 0.3)'}">
             <img src="/assets/man.svg" alt="Expense-image"/>
           </div>
-          <div class="omb-text-headline-super">{{ parseInt(transaction.amount) | currency }}</div>
+          <div class="omb-text-headline-super">{{ transactionAmount | currency }}</div>
         </div>
 
         <div id="flex-5" class="d-flex justify-content-between omb-margin-4 flex-column">
           <div class="d-flex justify-content-between">
-            <span id="expense-name">{{ item.name }}</span>
+            <span id="expense-name">{{ expenseName }}</span>
             <div>
-              <span class="balance-prev">{{ itemPrev | currency }}</span>
-              <span>{{ expenseAmount / 100 | currency }}</span>
+              <span class="balance-prev">{{ expensePrev | currency }}</span>
+              <span>{{ expenseAmount | currency }}</span>
             </div>
           </div>
           <div class="d-flex justify-content-between">
 
-            <span id="account-name">{{ accounts.items[transaction.account.source].name }}</span>
+            <span id="account-name">{{ transaction.account.source.name }}</span>
 
             <div>
-              <span class="balance-prev">{{ accountNext | currency }}</span>
+              <span class="balance-prev">{{ accountPrev | currency }}</span>
               <span>{{ accountAmount | currency }}</span>
             </div>
           </div>
@@ -51,56 +51,44 @@ export default {
     ...mapState(["expenses", "incomes", "savings", "period", "accounts", "freeMoney"]),
     ...mapState("transaction", ["transaction"]),
     item() {
-      if(this.transaction.expense){
-        if(!this.$store.state.expenses){
-          this.$store.dispatch('fetchExpenses', this.period.now)
-          return this.expenses.items[this.transaction.expense]
-        } else {
-          return this.expenses.items[this.transaction.expense]
-        }
+      if(this.transaction){
+        return this.transaction
       } else {
         return {
-          name: " из свободных",
+          name: "из свободных",
           amount: this.freeMoney.amount - (parseInt(this.transaction.amount) * 100)
         }
       }
     },
+    transactionAmount() {
+      return parseFloat(this.transaction.amount.replace(/,/g, '.'))
+    },
     expenseAmount() {
       let result
-      if(this.transaction.expense){
-        result = this.item.balance - (parseInt(this.transaction.amount) * 100)
+      let amount = parseFloat(this.transaction.amount.replace(/,/g, '.')) * 100
+      if(this.transaction.expense.id){
+        result = this.expenses.items[this.transaction.expense.id].balance - amount
       } else {
-        result = this.freeMoney.amount - (parseInt(this.transaction.amount) * 100)
+        result = this.freeMoney.amount - amount
       }
-      return result
+      return result / 100
     },
-    itemPrev() {
-        if(this.transaction.expense){
-          return this.item.balance / 100
+    expensePrev() {
+        if(this.transaction.expense.id){
+          return this.expenses.items[this.transaction.expense.id].balance / 100
         } else {
           return this.freeMoney.amount / 100
         }
     },
-    accountNext() {
-      return this.accounts.items[this.transaction.account.source].balance/100
+    accountPrev() {
+      return this.accounts.items[this.transaction.account.source.id].balance / 100
     },
     accountAmount(){
-      return this.accounts.items[this.transaction.account.source].balance/100 - parseInt(this.transaction.amount)
-    },
-    incomeName(){
-      console.log(this.transaction.income)
-      console.log(this.incomes.items)
-      console.log(this.incomes.items[this.transaction.income])
-      console.log(this.incomes.items[this.transaction.income]['name'])
-      if(this.transaction.income){
-        return this.incomes.items[this.transaction.income]['name']
-      } else {
-        return "Прочие доходы"
-      }
+      return (this.accounts.items[this.transaction.account.source.id].balance - (parseFloat(this.transaction.amount.replace(/,/g, '.')) * 100)) / 100
     },
     expenseName(){
-      if(this.transaction.expense){
-        return '"' + this.expense.name + '"'
+      if(this.transaction.expense.name){
+        return this.transaction.expense.name
       } else {
         return "из свободных"
       }

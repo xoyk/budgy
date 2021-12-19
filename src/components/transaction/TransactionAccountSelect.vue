@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="accounts">
     <SectionHeader :text="text"></SectionHeader>
     <OmbSelect :title="name" :amount="amount" v-on:clicked="showAccounts"></OmbSelect>
   </div>
@@ -27,31 +27,36 @@ export default {
   },
   created() {
     this.$store.dispatch('fetchAccounts')
-    if(!this.transaction.account[this.type]){
-      this.transaction.account[this.type] = this.default.id
+    if(this.accounts.default){
+      if(!this.transaction.account[this.type]){
+        this.transaction.account[this.type] = this.accounts.default
+      }
     }
   },
   methods: {
     showAccounts() {
       this.$router.push({name: "transaction-edit-account", params: {type: this.type} })
-    }
+    },
   },
   computed: {
     name() {
       if(this.accounts.items){
-        return this.transaction.account[this.type] ? this.accounts.items[this.transaction.account[this.type]]['name'] : this.default.name
+        return this.transaction.account[this.type] ? this.transaction.account[this.type]['name'] : this.accounts.default.name
       } else {
-        return this.default.name
+        return ""
       }
     },
     amount(){
-      let accountId = this.transaction.account[this.type]
+      let accountId = this.transaction.account[this.type].id
       if(accountId){
-        return this.accounts.items[accountId]['amount']
-      } else
-      {
+        if(this.accounts.items){
+          return this.accounts.items[accountId]['balance']
+        } else {
+          return 0
+        }
+      } else {
         if(this.accounts.default){
-          return this.default.amount
+          return this.accounts.default.amount
         } else {
           return 0
         }

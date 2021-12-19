@@ -35,16 +35,6 @@ export default {
     back(){
       this.$router.push('/transaction/new')
     },
-    nextStep(event) {
-      event.preventDefault();
-      this.$store
-          .dispatch("transaction/saveTransaction", this.transaction)
-          .then(() => {
-            this.$router.push({name: "transaction-success", params: {type: this.transaction.type} })
-            // this.$store.dispatch("transaction/clearTransaction")
-          })
-          .catch(() => {});
-    },
   },
   watch: {
     '$store.state.period': 'fetchData',

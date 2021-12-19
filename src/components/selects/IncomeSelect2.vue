@@ -9,7 +9,7 @@
           @click="changeIncome(income)"
       >
         <div>{{ income.name }}</div>
-        <div>{{ formatAmount(income.amount / 100) }}</div>
+        <div>{{ (income.amount / 100) | currency }}</div>
       </div>
     </div>
   </div>
@@ -39,9 +39,6 @@ export default {
       } else {
         this.transaction.income = ""
       }
-    },
-    formatAmount(amount) {
-      return amount.toLocaleString('ru-RU', {style: 'currency', currency: 'RUB', maximumFractionDigits: 0})
     }
   },
 };

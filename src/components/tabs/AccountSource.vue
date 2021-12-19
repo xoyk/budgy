@@ -47,7 +47,7 @@ export default {
     ...mapState(["accounts", "period"]),
     ...mapState(
       {
-        transaction: state => state.transaction
+        transaction: state => state.transaction.transaction
       }
     ),
     router() {
