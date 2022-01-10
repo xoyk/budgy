@@ -36,8 +36,8 @@
     <div id="transaction-fields" v-if="period" class="omb-margin-1 flex-grow-1 d-flex">
         <ExpenseStart v-if="transaction.type === 'expense'"></ExpenseStart>
         <IncomeStart v-if="transaction.type === 'income'"></IncomeStart>
-        <SavingDrawerTab v-if="transaction.transactionType === 'saving'"></SavingDrawerTab>
-        <TransferDrawerTab v-if="transaction.transactionType === 'transfer'"></TransferDrawerTab>
+        <SavingDrawerTab v-if="transaction.type === 'saving'"></SavingDrawerTab>
+        <TransferDrawerTab v-if="transaction.type === 'transfer'"></TransferDrawerTab>
     </div>
     <TransactionButtons :buttons="buttons" v-on:clicked="saveTransaction()"></TransactionButtons>
   </div>
@@ -90,6 +90,7 @@ export default {
   created() {
     moment.locale('ru')
     this.$store.dispatch("fetchPeriod", "current")
+    this.$store.dispatch("fetchAccounts", "current")
     if(this.transactionId !== "new"){
       this.$store.dispatch("transaction/fetchTransaction", this.transactionId)
     }
@@ -119,8 +120,13 @@ export default {
     },
     saveTransaction(){
       if(!this.transaction.name){
-        this.transaction.name = this.transaction[this.transaction.type]['name']
+        if(this.transaction.type !== "transfer"){
+          this.transaction.name = this.transaction[this.transaction.type]['name'] || this.tabs[this.transaction.type].text
+        } else {
+          this.transaction.name = this.tabs.transfer.text
+        }
       }
+
       this.$store.dispatch('transaction/saveTransaction', this.transaction)
           .then(() => {
             this.$router.push({name: "transaction-success", params: {type: this.transaction.type} })
@@ -143,9 +149,10 @@ export default {
   },
   computed: {
     ...mapState({
-      transaction: state => state.transaction.transaction
+      transaction: state => state.transaction.transaction,
+      period: state => state.period,
+      tabs: state => state.transaction.tabs
     }),
-    ...mapState(["period"]),
     ...mapGetters(['transaction/getTransactionById'])
   }
 };

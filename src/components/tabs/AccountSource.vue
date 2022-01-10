@@ -20,7 +20,6 @@ export default {
     BackButton
   },
   created() {
-    console.log(this.type, 'type type')
     this.$store.dispatch('fetchPeriod', "current")
   },
   methods: {
@@ -35,7 +34,7 @@ export default {
       this.$store
           .dispatch("transaction/saveTransaction", this.transaction)
           .then(() => {
-            this.$router.push({name: "transaction-success", params: {type: this.transaction.transactionType} })
+            this.$router.push({name: "transaction-success", params: {type: this.transaction.type} })
           })
           .catch(() => {});
     }
@@ -51,7 +50,7 @@ export default {
       }
     ),
     router() {
-      return { name: 'transaction-success', params: { type: this.transaction.transactionType}}
+      return { name: 'transaction-success', params: { type: this.transaction.type}}
     }
   },
 };

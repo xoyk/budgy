@@ -23,28 +23,29 @@ export const state = {
     day: {},
     id: {}
   },
-  tabs: [
+  tabs:
     {
-      text: "Расход",
-      code: "expense",
-      namePlaceholder: "Куда потратили"
+      expense: {
+        text: "Расход",
+        code: "expense",
+        namePlaceholder: "Куда потратили"
+      },
+      income: {
+        text: "Доход",
+        code: "income",
+        namePlaceholder: "Откуда пришло"
+      },
+      saving: {
+        text: "Накопление",
+        code: "saving",
+        namePlaceholder: "Название"
+      },
+      transfer: {
+        text: "Трансфер",
+        code: "transfer",
+        namePlaceholder: "Название"
+      }
     },
-    {
-      text: "Доход",
-      code: "income",
-      namePlaceholder: "Откуда пришло"
-    },
-    {
-      text: "Накопление",
-      code: "saving",
-      namePlaceholder: "Название"
-    },
-    {
-      text: "Трансфер",
-      code: "transfer",
-      namePlaceholder: "Название"
-    }
-  ],
   currentTab: "expense"
 }
 
@@ -65,14 +66,15 @@ export const mutations = {
     state.transactions2.current = transaction
   },
   SET_TRANSACTION_ACCOUNT(state, payload){
-    console.log(payload.account, 'account ID')
     state.transaction.account[payload.type] = payload.account
+  },
+  SET_TRANSACTION_DEFAULT_ACCOUNT(state, payload) {
+      state.transaction.account[payload.type] = payload.account
   },
   CLEAR_TRANSACTION(state){
     state.transaction = {
       date: "",
       name: "",
-      transactionType: "expense",
       type: "expense",
       amount: "",
       expense: "",
@@ -145,8 +147,10 @@ export const actions = {
     commit("CLEAR_TRANSACTION")
   },
   setTransactionAccount({ commit }, payload){
-    console.log(payload, 'account!')
     commit("SET_TRANSACTION_ACCOUNT", payload);
+  },
+  setDefaultAccount({ commit }, payload){
+    commit("SET_TRANSACTION_DEFAULT_ACCOUNT", payload);
   },
   saveTransaction({ commit, dispatch }, data) {
     commit("SET_SAVING_STATUS", "saving");

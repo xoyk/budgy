@@ -27,7 +27,6 @@ export default {
   methods: {
     fetchData() {
       this.$store.dispatch('fetchExpenses', this.period.now)
-      this.$store.dispatch('fetchAccounts', this.period.now)
     },
     switchToggle() {
       this.saving = !this.saving

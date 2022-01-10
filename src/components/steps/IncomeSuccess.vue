@@ -111,22 +111,6 @@ export default {
     font-weight: bold;
   }
 
-  .transaction-avatar {
-    background: rgba(0, 255, 91, 0.3);
-    width: 120px;
-    height: 120px;
-    max-height: 120px;
-    border-radius: 60px;
-    margin-top: 38px;
-    margin-bottom: 24px;
-    align-items: center;
-  }
-
-  .transaction-avatar > img {
-    width: 67px;
-    height: 63px;
-  }
-
   .transaction-title {
     margin-top: 24px;
     margin-bottom: 24px;

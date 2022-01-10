@@ -48,10 +48,18 @@ export default {
     fetchData() {
       this.$store.dispatch('fetchAccounts')
     },
+    checkDefault() {
+      if(!this.transaction.account.source.id) {
+        if(this.accounts.default) {
+          this.$store.dispatch('transaction/setDefaultAccount', {type: 'source', account: this.accounts.default})
+        }
+      }
+    }
   },
   watch: {
     '$store.state.period': 'fetchData',
-    '$store.state.transaction': 'fetchData'
+    '$store.state.transaction': 'fetchData',
+    '$store.state.accounts.default': 'checkDefault',
   },
   computed: {
     ...mapState(["expenses", "period", "freeMoney"]),

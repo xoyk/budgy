@@ -48,7 +48,7 @@ export default {
         return {
           name: "из свободных",
           before: this.freeMoney.amount / 100,
-          after: (this.freeMoney.amount - (parseInt(this.transaction.amount) * 100) )/ 100
+          after: (this.freeMoney.amount - parseFloat(this.transaction.amount.replace(/,/g, '.')) * 100) / 100
         }
       }
     },
@@ -72,21 +72,5 @@ export default {
   .transaction-title {
     margin-top: 24px;
     margin-bottom: 24px;
-  }
-
-  .transaction-avatar {
-    background: rgba(0, 255, 91, 0.3);
-    width: 120px;
-    height: 120px;
-    max-height: 120px;
-    border-radius: 60px;
-    margin-top: 38px;
-    margin-bottom: 24px;
-    align-items: center;
-  }
-
-  .transaction-avatar > img {
-    width: 67px;
-    height: 63px;
   }
 </style>

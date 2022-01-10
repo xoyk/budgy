@@ -105,7 +105,6 @@ export default new Vuex.Store({
     },
     SET_CURRENT_TAB(state, tab) {
       state.currentTab = tab
-      state.transaction.transaction.transactionType = tab
       state.transaction.transaction.type = tab
     }
   },
