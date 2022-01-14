@@ -1,11 +1,14 @@
 {
   "name": "budgy",
-  "version": "0.4.0a",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
+  },
+  "module.exports": {
+    "baseUrl": "/"
   },
   "dependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
@@ -44,6 +47,6 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^1.19.1",
-    "vue-template-compiler": "^2.6.12"
+    "vue-template-compiler": "^2.6.14"
   }
 }
