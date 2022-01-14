@@ -4,8 +4,8 @@
       <div v-for="transactionDay in transactions"
            :key="transactionDay.day" class="budgy-list-group d-flex flex-column">
         <div class="transaction-date omb-text-title">{{ formatDate(transactionDay.day) }}</div>
-        <router-link :to="{name: 'index', params: {transactionId: transaction.id}} " v-for="transaction in transactionDay.items" :key="transaction.id">
-              <div class="budgy-list-item d-flex justify-content-between" @click="editTransaction(transaction)">
+        <router-link :to="{name: 'transaction', params: {transactionId: transaction.id.toString()}} " v-for="transaction in transactionDay.items" :key="transaction.id">
+              <div class="budgy-list-item d-flex justify-content-between">
                 <BudgyItemIcon :item="getIconItem(transaction)"/>
                 <div class="flex-grow-1" id="budgy-name">
                   <div class="flex-grow-1 omb-text-body d-flex justify-content-between text-left">
@@ -57,6 +57,7 @@ export default {
       this.$store.dispatch("fetchExpenses", this.period.current.id);
       this.$store.dispatch("transaction/fetchTransactions", this.period.current.id);
       this.$store.dispatch('transaction/fetchTransactions2', { period: this.period.now, type: "id"})
+      this.$store.dispatch('transaction/fetchTransactions2', { period: this.period.now, type: "day"})
     },
     formatDate(date){
       moment.locale('ru')
@@ -124,8 +125,7 @@ export default {
       return "Транзакция"
     },
     editTransaction(transaction){
-      console.log(transaction)
-      // this.$router.push({'name': 'transaction-edit', params: {'transaction': transaction, 'transactionId': transaction.id.toString()}})
+      this.$router.push({'name': 'transaction-edit', params: {'transaction': transaction, 'transactionId': transaction.id.toString()}})
     },
     expenseName(transaction) {
       if(transaction.expense){
@@ -140,7 +140,7 @@ export default {
   },
   computed: {
     ...mapState(["period", "drawer", "expenses"]),
-    ...mapState("transaction", ['transactions'])
+    ...mapState("transaction", ['transactions', 'transactions2'])
   }
 };
 </script>

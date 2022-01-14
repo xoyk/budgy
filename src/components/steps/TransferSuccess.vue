@@ -12,31 +12,19 @@
           <div class="omb-text-headline-super">{{ transactionAmount | currency }}</div>
         </div>
 
-        <div id="flex-5" class="d-flex justify-content-between omb-margin-4 flex-column">
-          <div class="d-flex justify-content-between">
-            <span id="account-name">{{ accounts.items[transaction.account.source].name }}</span>
-            <div>
-              <span class="balance-prev">{{ accountSourcePrev | currency }}</span>
-              <span>{{ accountSourceAmount | currency }}</span>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between">
-
-            <span>{{ accounts.items[transaction.account.receiver].name }}</span>
-            <div>
-              <span class="balance-prev">{{ accountReceiverPrev | currency }}</span>
-              <span>{{ accountReceiverAmount | currency }}</span>
-            </div>
-          </div>
-        </div>
+        <TransactionBeforeAfter :resource="source" :account="account"></TransactionBeforeAfter>
       </div>
 </template>
 
 <script>
 import {mapState} from "vuex";
+import TransactionBeforeAfter from "../transaction/TransactionBeforeAfter";
 
 export default {
   name: "TransferSuccess",
+  components: {
+    TransactionBeforeAfter
+  },
   methods: {
     fetchData() {
       this.$store.dispatch('fetchAccounts')
@@ -48,55 +36,22 @@ export default {
   computed: {
     ...mapState(["period", "accounts"]),
     ...mapState("transaction", ["transaction"]),
-    item() {
-      if(this.transaction.saving){
-        this.$store.dispatch('fetchSavings', this.period.now)
-        console.log(this.savings.items)
-        return this.savings.items[this.transaction.saving]
-      } else {
-        return {name: "Прочие накопления"}
-      }
+    source() {
+        return {
+          name: this.transaction.account.source.name,
+          before: this.transaction.account.source.balance / 100,
+          after: (this.transaction.account.source.balance - parseFloat(this.transaction.amount.replace(/,/g, '.')) * 100) / 100,
+        }
     },
-    itemAmount() {
-      let result
-      if(this.item){
-        result = (this.item.amount - parseInt(this.transaction.amount) * 100) / 100
-      }
-      return result
-    },
-    itemPrev() {
-      if(this.item){
-        return this.item.amount / 100
-      } else {
-        return ""
-      }
-
-    },
-    accountReceiverPrev() {
-      return this.accounts.items[this.transaction.account.receiver].balance / 100
-    },
-    accountSourcePrev() {
-      return this.accounts.items[this.transaction.account.source].balance / 100
-    },
-    accountSourceAmount(){
-      return this.accounts.items[this.transaction.account.source].balance/100 - parseInt(this.transaction.amount)
-    },
-    accountReceiverAmount(){
-      return this.accounts.items[this.transaction.account.receiver].balance/100 + parseInt(this.transaction.amount)
-    },
-    incomeName(){
-      console.log(this.transaction.income)
-      console.log(this.incomes.items)
-      console.log(this.incomes.items[this.transaction.income])
-      console.log(this.incomes.items[this.transaction.income]['name'])
-      if(this.transaction.income){
-        return this.incomes.items[this.transaction.income]['name']
-      } else {
-        return "Прочие доходы"
+    account() {
+      return {
+        name: this.transaction.account.receiver.name,
+        before: this.transaction.account.receiver.balance / 100,
+        after: (this.transaction.account.receiver.balance + parseFloat(this.transaction.amount.replace(/,/g, '.')) * 100) / 100,
       }
     },
     transactionAmount() {
-      return parseInt(this.transaction.amount)
+      return parseFloat(this.transaction.amount.replace(/,/g, '.'))
     }
   }
 };
@@ -111,22 +66,6 @@ export default {
 
   input.active {
     font-weight: bold;
-  }
-
-  .transaction-avatar {
-    background: rgba(0, 255, 91, 0.3);
-    width: 120px;
-    height: 120px;
-    max-height: 120px;
-    border-radius: 60px;
-    margin-top: 38px;
-    margin-bottom: 24px;
-    align-items: center;
-  }
-
-  .transaction-avatar > img {
-    width: 67px;
-    height: 63px;
   }
 
   .transaction-title {

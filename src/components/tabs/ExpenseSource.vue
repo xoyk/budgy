@@ -27,23 +27,12 @@ export default {
   methods: {
     fetchData() {
       this.$store.dispatch('fetchExpenses', this.period.now)
-      this.$store.dispatch('fetchAccounts', this.period.now)
     },
     switchToggle() {
       this.saving = !this.saving
     },
     back(){
       this.$router.push('/transaction/new')
-    },
-    nextStep(event) {
-      event.preventDefault();
-      this.$store
-          .dispatch("transaction/saveTransaction", this.transaction)
-          .then(() => {
-            this.$router.push({name: "transaction-success", params: {type: this.transaction.type} })
-            // this.$store.dispatch("transaction/clearTransaction")
-          })
-          .catch(() => {});
     },
   },
   watch: {

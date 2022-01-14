@@ -66,7 +66,6 @@ export default {
   created() {
     this.fetchData()
     this.newIncome = this.transaction.income ? false : !!(this.transaction.amount || this.transaction.name);
-    this.transaction.transactionType = "income"
     this.transaction.type = "income"
     this.transaction.account.source = ""
   },

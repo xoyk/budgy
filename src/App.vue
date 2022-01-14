@@ -92,15 +92,15 @@ export default {
     background: transparent;
   }
 
+  .budgy-button:hover, button:focus, .drawer-buttons > button:focus {
+    outline: none !important;
+  }
+
   button {
     font-size: 13px;
     border-style: none;
     border-radius: 16px;
     padding: 0;
-  }
-
-  .budgy-button:hover, button:focus, .drawer-buttons > button:focus {
-    outline: none !important;
   }
 
   .color-freemoney {
@@ -109,6 +109,12 @@ export default {
 
   .drawer-buttons > a:hover {
     text-decoration: none;
+  }
+
+  .drawer-buttons button {
+    height: 48px;
+    border-radius: $omb-border-radius !important;
+    width: 100%;
   }
 
   .grid {
@@ -285,10 +291,20 @@ export default {
     height: 64px;
   }
 
-  .drawer-buttons button {
-    height: 48px;
-    border-radius: $omb-border-radius !important;
-    width: 100%;
+  .transaction-avatar {
+    background: rgba(0, 255, 91, 0.3);
+    width: 120px;
+    height: 120px;
+    max-height: 120px;
+    border-radius: 60px;
+    margin-top: 38px;
+    margin-bottom: 24px;
+    align-items: center;
+  }
+
+  .transaction-avatar > img {
+    width: 67px;
+    height: 63px;
   }
 
   .item-list {

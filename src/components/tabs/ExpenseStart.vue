@@ -8,12 +8,10 @@
         <OmbInput type="text" v-model="transaction.name" label="Куда потратили" id="name"></OmbInput>
       </div>
     </div>
-    <TransactionExpenseSelect :default="getDefault()"></TransactionExpenseSelect>
+    <TransactionExpenseSelect></TransactionExpenseSelect>
     <TransactionAccountSelect
         type="source"
         text="Как оплачиваем"
-        :default="accounts.default"
-        v-if="accounts.default"
     />
     <div class="flex-grow-1"></div>
   </div>
@@ -35,28 +33,33 @@ export default {
   },
   created() {
     this.transaction.type = 'expense'
-    this.transaction.account.receiver = ""
-    if(this.accounts.items) {
-      console.log(this.accounts.defaults, 'account defaults')
+
+    if(!this.transaction.expense) {
+      this.transaction.expense = {
+        name: 'из свободных'
+      }
     }
+
+    this.transaction.account.receiver = ""
 
     this.$store.dispatch('fetchPeriod', "current")
   },
   methods: {
     fetchData() {
-      this.$store.dispatch('fetchExpenses', this.period.now)
       this.$store.dispatch('fetchAccounts')
-      this.$store.dispatch('fetchFreeMoney', this.period.now)
     },
-    getDefault(){
-      if(this.freeMoney.amount){
-        console.log(this.freeMoney.amount / 100)
-        return {name: 'Свободные', amount: (this.freeMoney.amount / 100) }
+    checkDefault() {
+      if(!this.transaction.account.source.id) {
+        if(this.accounts.default) {
+          this.$store.dispatch('transaction/setDefaultAccount', {type: 'source', account: this.accounts.default})
+        }
       }
     }
   },
   watch: {
-    '$store.state.period': 'fetchData'
+    '$store.state.period': 'fetchData',
+    '$store.state.transaction': 'fetchData',
+    '$store.state.accounts.default': 'checkDefault',
   },
   computed: {
     ...mapState(["expenses", "period", "freeMoney"]),

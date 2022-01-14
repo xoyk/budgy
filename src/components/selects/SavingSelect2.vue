@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between flex-column" v-if="savings.active">
       <div
           class="item-list d-flex justify-content-between"
-          :class="{ active : transaction.saving === saving.id }"
+          :class="{ active : transaction.saving.id === saving.id }"
           v-for="saving in savings.active"
           :key="saving.id"
           @click="changeSaving(saving)"
@@ -23,9 +23,6 @@ import { mapState } from "vuex";
 
 export default {
   name: "SavingSelect2",
-  props: {
-    form: Object,
-  },
   data() {
     return {
       currentSaving: null,
@@ -38,7 +35,7 @@ export default {
   methods: {
     changeSaving(saving) {
       this.currentSaving = saving.id
-      this.transaction.saving = saving.id
+      this.transaction.saving = saving
       this.transaction.amount = saving.amount / 100
     },
   },

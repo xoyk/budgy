@@ -36,15 +36,15 @@
     <div id="transaction-fields" v-if="period" class="omb-margin-1 flex-grow-1 d-flex">
         <ExpenseStart v-if="transaction.type === 'expense'"></ExpenseStart>
         <IncomeStart v-if="transaction.type === 'income'"></IncomeStart>
-        <SavingDrawerTab v-if="transaction.transactionType === 'saving'"></SavingDrawerTab>
-        <TransferDrawerTab v-if="transaction.transactionType === 'transfer'"></TransferDrawerTab>
+        <SavingDrawerTab v-if="transaction.type === 'saving'"></SavingDrawerTab>
+        <TransferDrawerTab v-if="transaction.type === 'transfer'"></TransferDrawerTab>
     </div>
     <TransactionButtons :buttons="buttons" v-on:clicked="saveTransaction()"></TransactionButtons>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import ExpenseStart from "../components/tabs/ExpenseStart";
 import IncomeStart from "../components/tabs/IncomeStart";
 import SavingDrawerTab from "../components/tabs/SavingDrawerTab";
@@ -84,21 +84,24 @@ export default {
     BackButton,
     TransactionButtons
   },
+  watch: {
+    // '$store.state.transaction.amount': 'normalizeAmount'
+  },
   created() {
-    this.settings.transactionId = this.transactionId
     moment.locale('ru')
+    this.$store.dispatch("fetchPeriod", "current")
+    this.$store.dispatch("fetchAccounts", "current")
+    if(this.transactionId !== "new"){
+      this.$store.dispatch("transaction/fetchTransaction", this.transactionId)
+    }
 
     if(!this.transaction.date){
       this.transaction.date = moment(Date.now()).format("YYYY-MM-DD")
+    } else {
+      this.transaction.date = moment(this.transaction.date).format("YYYY-MM-DD")
     }
 
     this.formatted = this.transaction.date ? this.transaction.date : moment(Date.now()).format("[Сегодня, ]YYYY-MM-DD")
-
-    if(this.transactionId !== "new"){
-      this.$store.dispatch("transaction/fetchTransaction", this.transactionId)
-    } else {
-      this.$store.dispatch("fetchPeriod", "current")
-    }
 
     if(this.$store.state.buttons.add){
       this.$store.dispatch("setButtonState", {type: "add", status: false})
@@ -116,6 +119,14 @@ export default {
       }
     },
     saveTransaction(){
+      if(!this.transaction.name){
+        if(this.transaction.type !== "transfer"){
+          this.transaction.name = this.transaction[this.transaction.type]['name'] || this.tabs[this.transaction.type].text
+        } else {
+          this.transaction.name = this.tabs.transfer.text
+        }
+      }
+
       this.$store.dispatch('transaction/saveTransaction', this.transaction)
           .then(() => {
             this.$router.push({name: "transaction-success", params: {type: this.transaction.type} })
@@ -123,7 +134,7 @@ export default {
           .catch(() => {});
     },
     onContext(ctx) {
-      moment.locale('ru')
+      moment.locale("ru")
       // The date formatted in the locale, or the `label-no-date-selected` string
       if(ctx.selectedFormatted !== "No date selected") {
         this.formatted = moment(ctx.selectedDate).format("DD MMMM")
@@ -138,9 +149,11 @@ export default {
   },
   computed: {
     ...mapState({
-      transaction: state => state.transaction.transaction
+      transaction: state => state.transaction.transaction,
+      period: state => state.period,
+      tabs: state => state.transaction.tabs
     }),
-    ...mapState(["period"]),
+    ...mapGetters(['transaction/getTransactionById'])
   }
 };
 </script>

@@ -2,42 +2,29 @@
       <div class="d-flex flex-column flex-grow-1">
         <div class="transaction-title omb-text-headline">
           <span>
-            Ура! Добавлен новый расход<br> «{{ item.name }}»
+            Ура! Добавлен новый расход<br> «{{ transaction.name }}»
           </span>
         </div>
         <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
-          <div class="transaction-avatar d-flex justify-content-center flex-grow-1" :style="{backgroundColor: item.color ? '#' + item.color.hex : 'rgba(0, 255, 91, 0.3)'}">
+          <div class="transaction-avatar d-flex justify-content-center flex-grow-1" :style="{backgroundColor: expense.color ? '#' + expense.color.hex : 'rgba(0, 255, 91, 0.3)'}">
             <img src="/assets/man.svg" alt="Expense-image"/>
           </div>
-          <div class="omb-text-headline-super">{{ parseInt(transaction.amount) | currency }}</div>
+          <div class="omb-text-headline-super">{{ transactionAmount | currency }}</div>
         </div>
 
-        <div id="flex-5" class="d-flex justify-content-between omb-margin-4 flex-column">
-          <div class="d-flex justify-content-between">
-            <span id="expense-name">{{ item.name }}</span>
-            <div>
-              <span class="balance-prev">{{ itemPrev | currency }}</span>
-              <span>{{ expenseAmount / 100 | currency }}</span>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between">
-
-            <span id="account-name">{{ accounts.items[transaction.account.source].name }}</span>
-
-            <div>
-              <span class="balance-prev">{{ accountNext | currency }}</span>
-              <span>{{ accountAmount | currency }}</span>
-            </div>
-          </div>
-        </div>
+        <TransactionBeforeAfter :resource="expense" :account="account"></TransactionBeforeAfter>
       </div>
 </template>
 
 <script>
 import {mapState} from "vuex";
+import TransactionBeforeAfter from "../transaction/TransactionBeforeAfter";
 
 export default {
   name: "ExpenseSuccess",
+  components: {
+    TransactionBeforeAfter
+  },
   methods: {
     fetchData() {
       this.$store.dispatch('fetchExpenses', this.period.now)
@@ -50,128 +37,40 @@ export default {
   computed: {
     ...mapState(["expenses", "incomes", "savings", "period", "accounts", "freeMoney"]),
     ...mapState("transaction", ["transaction"]),
-    item() {
-      if(this.transaction.expense){
-        if(!this.$store.state.expenses){
-          this.$store.dispatch('fetchExpenses', this.period.now)
-          return this.expenses.items[this.transaction.expense]
-        } else {
-          return this.expenses.items[this.transaction.expense]
+    expense() {
+      if(this.transaction.expense.id){
+        return {
+          name: this.transaction.expense.name,
+          before: this.expenses.items[this.transaction.expense.id].balance / 100,
+          after: (this.expenses.items[this.transaction.expense.id].balance - parseFloat(this.transaction.amount.replace(/,/g, '.')) * 100) / 100,
         }
       } else {
         return {
-          name: " из свободных",
-          amount: this.freeMoney.amount - (parseInt(this.transaction.amount) * 100)
+          name: "из свободных",
+          before: this.freeMoney.amount / 100,
+          after: (this.freeMoney.amount - parseFloat(this.transaction.amount.replace(/,/g, '.')) * 100) / 100
         }
       }
     },
-    expenseAmount() {
-      let result
-      if(this.transaction.expense){
-        result = this.item.balance - (parseInt(this.transaction.amount) * 100)
-      } else {
-        result = this.freeMoney.amount - (parseInt(this.transaction.amount) * 100)
-      }
-      return result
+    transactionAmount() {
+      return parseFloat(this.transaction.amount.replace(/,/g, '.'))
     },
-    itemPrev() {
-        if(this.transaction.expense){
-          return this.item.balance / 100
-        } else {
-          return this.freeMoney.amount / 100
-        }
-    },
-    accountNext() {
-      return this.accounts.items[this.transaction.account.source].balance/100
-    },
-    accountAmount(){
-      return this.accounts.items[this.transaction.account.source].balance/100 - parseInt(this.transaction.amount)
-    },
-    incomeName(){
-      console.log(this.transaction.income)
-      console.log(this.incomes.items)
-      console.log(this.incomes.items[this.transaction.income])
-      console.log(this.incomes.items[this.transaction.income]['name'])
-      if(this.transaction.income){
-        return this.incomes.items[this.transaction.income]['name']
-      } else {
-        return "Прочие доходы"
-      }
-    },
-    expenseName(){
-      if(this.transaction.expense){
-        return '"' + this.expense.name + '"'
-      } else {
-        return "из свободных"
+    account() {
+      return {
+        name: this.transaction.account.source.name,
+        before: this.accounts.items[this.transaction.account.source.id].balance / 100,
+        after: (this.accounts.items[this.transaction.account.source.id].balance - (parseFloat(this.transaction.amount.replace(/,/g, '.')) * 100)) / 100
       }
     }
   }
 };
 </script>
 
-<style>
-
-</style>
-
 <style lang="scss" scoped>
   @import "../../assets/custom.scss";
-
-  input.active {
-    font-weight: bold;
-  }
-
-  .transaction-avatar {
-    background: rgba(0, 255, 91, 0.3);
-    width: 120px;
-    height: 120px;
-    max-height: 120px;
-    border-radius: 60px;
-    margin-top: 38px;
-    margin-bottom: 24px;
-    align-items: center;
-  }
-
-  .transaction-avatar > img {
-    width: 67px;
-    height: 63px;
-  }
 
   .transaction-title {
     margin-top: 24px;
     margin-bottom: 24px;
-  }
-
-  .omb-grid-4 {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    padding: 24px 24px 24px 0;
-    font-size: $omb-text-body;
-    column-gap: 12px;
-  }
-
-  .omb-grid-5 {
-    display: grid;
-    justify-items: start;
-    text-align: center;
-
-  }
-
-  .balance-prev {
-    justify-self: start;
-    text-decoration: line-through;
-    padding-right: 4px;
-    color: $omb-color-tetriary;
-  }
-
-  .omb-margin-4 {
-    margin-bottom: 38px;
-  }
-
-  #expense-current {
-
-  }
-
-  #flex-5 {
-    row-gap: 12px;
   }
 </style>

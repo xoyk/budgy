@@ -2,7 +2,7 @@
       <div class="d-flex flex-column flex-grow-1">
         <div class="transaction-title omb-text-headline">
           <span>
-            Ура! Добавлено новое накопление<br>«{{ item.name }}»
+            Ура! Добавлено новое накопление<br>«{{ transaction.name }}»
           </span>
         </div>
         <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
@@ -14,25 +14,21 @@
 
         <div id="flex-5" class="d-flex justify-content-between omb-margin-4 flex-column">
           <div class="d-flex justify-content-between">
-            <span id="expense-name">{{ item.name }}</span>
+            <span id="expense-name">{{ saving.name }}</span>
             <div>
-              <span class="balance-prev">{{ itemPrev | currency }}</span>
-              <span>{{ itemAmount | currency }}</span>
+              <span class="balance-prev">{{ saving.before | currency }}</span>
+              <span>{{ saving.after | currency }}</span>
             </div>
           </div>
           <div class="d-flex justify-content-between">
-
-            <span id="account-name">{{ accounts.items[transaction.account.source].name }}</span>
-
+            <span id="account-name">{{ transaction.account.source.name }}</span>
             <div>
               <span class="balance-prev">{{ accountSourcePrev | currency }}</span>
               <span>{{ accountSourceAmount | currency }}</span>
             </div>
           </div>
           <div class="d-flex justify-content-between">
-
-            <span>{{ accounts.items[transaction.account.receiver].name }}</span>
-
+            <span>{{ transaction.account.receiver.name }}</span>
             <div>
               <span class="balance-prev">{{ accountReceiverPrev | currency }}</span>
               <span>{{ accountReceiverAmount | currency }}</span>
@@ -59,19 +55,25 @@ export default {
   computed: {
     ...mapState(["savings", "period", "accounts"]),
     ...mapState("transaction", ["transaction"]),
-    item() {
-      if(this.transaction.saving){
-        this.$store.dispatch('fetchSavings', this.period.now)
-        console.log(this.savings.items)
-        return this.savings.items[this.transaction.saving]
+    saving() {
+      if(this.transaction.saving.id){
+        return {
+          name: this.transaction.saving.name,
+          before: this.transaction.saving.amount / 100,
+          after: (this.transaction.saving.amount - parseInt(this.transaction.amount) * 100) / 100
+        }
       } else {
-        return {name: "Прочие накопления"}
+        return {
+          name: "Прочие накопления",
+          before: "",
+          after: ""
+        }
       }
     },
     itemAmount() {
       let result
-      if(this.item){
-        result = (this.item.amount - parseInt(this.transaction.amount) * 100) / 100
+      if(this.saving.id){
+        result = (this.saving.amount - parseInt(this.transaction.amount) * 100) / 100
       }
       return result
     },
@@ -81,30 +83,18 @@ export default {
       } else {
         return ""
       }
-
     },
     accountReceiverPrev() {
-      return this.accounts.items[this.transaction.account.receiver].balance / 100
+      return this.accounts.items[this.transaction.account.receiver.id].balance / 100
     },
     accountSourcePrev() {
-      return this.accounts.items[this.transaction.account.source].balance / 100
+      return this.accounts.items[this.transaction.account.source.id].balance / 100
     },
     accountSourceAmount(){
-      return this.accounts.items[this.transaction.account.source].balance/100 - parseInt(this.transaction.amount)
+      return this.accounts.items[this.transaction.account.source.id].balance/100 - parseInt(this.transaction.amount)
     },
     accountReceiverAmount(){
-      return this.accounts.items[this.transaction.account.receiver].balance/100 + parseInt(this.transaction.amount)
-    },
-    incomeName(){
-      console.log(this.transaction.income)
-      console.log(this.incomes.items)
-      console.log(this.incomes.items[this.transaction.income])
-      console.log(this.incomes.items[this.transaction.income]['name'])
-      if(this.transaction.income){
-        return this.incomes.items[this.transaction.income]['name']
-      } else {
-        return "Прочие доходы"
-      }
+      return this.accounts.items[this.transaction.account.receiver.id].balance/100 + parseInt(this.transaction.amount)
     },
     transactionAmount() {
       return parseInt(this.transaction.amount)
@@ -122,22 +112,6 @@ export default {
 
   input.active {
     font-weight: bold;
-  }
-
-  .transaction-avatar {
-    background: rgba(0, 255, 91, 0.3);
-    width: 120px;
-    height: 120px;
-    max-height: 120px;
-    border-radius: 60px;
-    margin-top: 38px;
-    margin-bottom: 24px;
-    align-items: center;
-  }
-
-  .transaction-avatar > img {
-    width: 67px;
-    height: 63px;
   }
 
   .transaction-title {

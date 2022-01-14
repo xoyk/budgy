@@ -5,7 +5,6 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 import * as transaction from '@/store/modules/transaction'
-import * as colors from '@/store/modules/colors'
 
 Vue.use(Vuex);
 
@@ -40,8 +39,7 @@ export default new Vuex.Store({
     },
   },
   modules: {
-    transaction,
-    colors
+    transaction
   },
   mutations: {
     auth_request(state){
@@ -107,7 +105,6 @@ export default new Vuex.Store({
     },
     SET_CURRENT_TAB(state, tab) {
       state.currentTab = tab
-      state.transaction.transaction.transactionType = tab
       state.transaction.transaction.type = tab
     }
   },
@@ -254,5 +251,6 @@ export default new Vuex.Store({
   getters : {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
+    freeMoney: state => state.freeMoney
   }
 });

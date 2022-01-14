@@ -2,7 +2,7 @@
     <div id="menu-container">
       <div id="menu-inner">
         <div class="d-flex" id="transaction-menu">
-          <span v-for="(tab, index) in transaction.tabs" :key="index" :class="isActive(tab.code)" class="omb-text-body menu-item" @click="clicked(index)">
+          <span v-for="(tab, index) in tabs" :key="index" :class="isActive(tab.code)" class="omb-text-body menu-item" @click="clicked(index)">
               {{ tab.text }}
           </span></div>
       </div>
@@ -16,17 +16,18 @@ export default {
   name: "TransactionTypeSelect",
   methods: {
     isActive(tabCode) {
-      if(tabCode === this.transaction.transaction.type)
+      if(tabCode === this.transaction.type)
         return "active omb-color-primary"
     },
     clicked(index){
       this.$emit('change', index)
-      this.$store.dispatch("setCurrentTab", this.transaction.tabs[index]['code'])
+      this.$store.dispatch("setCurrentTab", this.tabs[index]['code'])
     }
   },
   computed: {
     ...mapState({
-      transaction: state => state.transaction
+      transaction: state => state.transaction.transaction,
+      tabs: state => state.transaction.tabs
     })
   }
 

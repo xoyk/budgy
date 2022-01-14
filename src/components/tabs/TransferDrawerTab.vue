@@ -22,11 +22,7 @@ export default {
     TransactionAccountSelect,
     OmbInput
   },
-  props: {
-    form: Object
-  },
   created() {
-    this.transaction.transactionType = 'transfer'
     this.transaction.type = 'transfer'
     this.$store.dispatch('fetchAccounts', this.period.now)
   },

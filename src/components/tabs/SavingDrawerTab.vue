@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column flex-grow-1">
       <h3 class="sub_header">На что откладываем</h3>
-      <SavingSelect2 :form="form"></SavingSelect2>
+      <SavingSelect2></SavingSelect2>
       <TransactionAccountSelect
           type="source"
           text="Чем платим"
@@ -24,11 +24,7 @@ export default {
     TransactionAccountSelect,
     SavingSelect2
   },
-  props: {
-    form: Object
-  },
   created() {
-    this.transaction.transactionType = 'saving'
     this.transaction.type = 'saving'
     this.$store.dispatch('fetchSavings', this.period.now)
   },

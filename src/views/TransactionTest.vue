@@ -68,7 +68,7 @@ export default {
 
     },
     isActive(tabCode) {
-      if(tabCode === this.transaction.transactionType)
+      if(tabCode === this.transaction.type)
         return "active omb-color-primary"
     },
     cancel(){
