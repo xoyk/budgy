@@ -2,7 +2,7 @@
       <div class="d-flex flex-column flex-grow-1">
         <div class="transaction-title omb-text-headline">
           <span>
-            Ура! Добавлен новый расход<br> «{{ transaction.name }}»
+            {{ text }} <br>«{{ transaction.name }}»
           </span>
         </div>
         <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
@@ -12,7 +12,7 @@
           <div class="omb-text-headline-super">{{ transactionAmount | currency }}</div>
         </div>
 
-        <TransactionBeforeAfter :resource="expense" :account="account"></TransactionBeforeAfter>
+        <TransactionBeforeAfter :resource="expense" :account="account" v-if="!transaction.id"></TransactionBeforeAfter>
       </div>
 </template>
 
@@ -61,6 +61,9 @@ export default {
         before: this.accounts.items[this.transaction.account.source.id].balance / 100,
         after: (this.accounts.items[this.transaction.account.source.id].balance - (parseFloat(this.transaction.amount.replace(/,/g, '.')) * 100)) / 100
       }
+    },
+    text() {
+      return this.transaction.id ? "Ура! Отредактирован расход" : "Ура! Добавлен новый расход"
     }
   }
 };

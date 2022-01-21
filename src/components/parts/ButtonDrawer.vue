@@ -4,6 +4,7 @@
       <b-row class="button-background" align-h="end" no-gutters>
         <b-col lg="2" md="4">
           <button
+              v-wave
               class="budgy-button"
               id="transactionCreate"
               data-cy="create_transaction_button"

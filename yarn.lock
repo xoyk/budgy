@@ -9272,10 +9272,15 @@
   "resolved" "https://registry.npm.taobao.org/uuid/download/uuid-3.4.0.tgz?cache=0&sync_timestamp=1588192989289&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuuid%2Fdownload%2Fuuid-3.4.0.tgz"
   "version" "3.4.0"
 
-"v2-cupertino@^1.2.4":
-  "integrity" "sha512-2gbKPxWtBu50KJ3I9vlh7ePjB3OTJVBulHr2kirSpi39iYf8aH/l0rbtU6eQ0Cu3RVzc5QrQg7hvs34f/sKZwQ=="
-  "resolved" "https://registry.npmjs.org/v2-cupertino/-/v2-cupertino-1.2.4.tgz"
-  "version" "1.2.4"
+v-wave@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/v-wave/-/v-wave-1.3.3.tgz#f6cdca64f39da944cdaa8db673737fa2756660f2"
+  integrity sha512-DruB2Y5VHXNiRefwh+YLUKzZ+9I5WXXXJiROmb+ztdJCBxSqEtWZq49wEfT81hdPJeTLwNI4f1l4xEa/RcmYKw==
+
+v2-cupertino@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.npmjs.org/v2-cupertino/-/v2-cupertino-1.2.4.tgz"
+  integrity sha512-2gbKPxWtBu50KJ3I9vlh7ePjB3OTJVBulHr2kirSpi39iYf8aH/l0rbtU6eQ0Cu3RVzc5QrQg7hvs34f/sKZwQ==
   dependencies:
     "cupertino-pane" "^1.2.4"
 

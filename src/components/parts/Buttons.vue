@@ -5,7 +5,7 @@
       </div>
 
       <div class="flex-grow-1">
-        <button class="omb-button-primary" :class="button2.state === false ? 'disabled' : ''" @click="clickHandler">{{ button2.text }}</button>
+        <button v-wave class="omb-button-primary" :class="button2.state === false ? 'disabled' : ''" @click="clickHandler">{{ button2.text }}</button>
       </div>
     </div>
 </template>
