@@ -103,6 +103,10 @@ export default {
     padding: 0;
   }
 
+  label {
+    margin-bottom: 0 !important;
+  }
+
   .color-freemoney {
     background-color: $omb-bg-color-accent;
   }
@@ -121,8 +125,12 @@ export default {
     display: grid;
   }
 
-  label {
-    margin-bottom: 0 !important;
+  .item-list {
+    border-radius: 16px;
+    padding: 12px 0;
+    font-size: $omb-text-body;
+    display: inline-block;
+    line-height: 19px;
   }
 
   .omb-button-primary {
@@ -305,14 +313,6 @@ export default {
   .transaction-avatar > img {
     width: 67px;
     height: 63px;
-  }
-
-  .item-list {
-    border-radius: 16px;
-    padding: 12px 0;
-    font-size: $omb-text-body;
-    display: inline-block;
-    line-height: 19px;
   }
 
   footer {

@@ -12,6 +12,9 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 
+import VWave from "v-wave";
+Vue.use(VWave)
+
 import Axios from "axios";
 Vue.prototype.$http = Axios;
 
