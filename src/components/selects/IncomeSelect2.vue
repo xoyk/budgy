@@ -3,13 +3,15 @@
     <div id="income-list" class="d-flex flex-column" v-if="incomes.active">
       <div
           class="item-list d-flex justify-content-between"
-          :class="{ active : transaction.income.id === income.id }"
           v-for="income in incomes.active"
           :key="income.id"
           @click="changeIncome(income)"
       >
         <div>{{ income.name }}</div>
         <div>{{ (income.amount / 100) | currency }}</div>
+      </div>
+      <div v-if="additional">
+        12313213
       </div>
     </div>
   </div>
@@ -24,6 +26,7 @@ export default {
   name: "IncomeSelect2",
   props: {
     period: String,
+    additional: Object,
     accountType: String
   },
   computed: {
