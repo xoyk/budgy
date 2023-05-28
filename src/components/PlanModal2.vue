@@ -44,8 +44,8 @@
                 id="checkbox-1"
                 v-model="form.received"
                 name="checkbox-1"
-                value="true"
-                unchecked-value="false"
+                value="1"
+                unchecked-value="0"
             >
               Доход получен
             </b-form-checkbox>
