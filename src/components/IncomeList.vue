@@ -27,7 +27,7 @@
           v-for="income in incomes.active"
           :key="income.id"
       >
-        <td data-cy="income_name"><span v-if="income.received">✅ </span>{{income.name}}</td>
+        <td data-cy="income_name"><span v-if="income.received == 1">✅ </span>{{income.name}}</td>
         <td data-cy="income_amount">{{ income.amount / 100 }}</td>
         <td v-if="editable" v-b-modal="'planModalincome'" @click="setData(income)">...</td>
       </tr>
@@ -37,7 +37,7 @@
           :key="income.id"
           class="table-secondary"
       >
-        <td data-cy="income_name"><span v-if="income.received">✅ </span>{{income.name}}</td>
+        <td data-cy="income_name"><span v-if="income.received == 1">✅ </span>{{income.name}}</td>
         <td data-cy="income_amount">{{ income.amount / 100 }}</td>
         <td v-if="editable" v-b-modal="'planModalincome'" @click="setData(income)">...</td>
       </tr>
