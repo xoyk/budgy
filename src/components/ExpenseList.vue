@@ -11,7 +11,7 @@
       Добавить
     </b-button></h2>
     <table
-        class="table table-striped table-bordered table-danger"
+        class="table table-striped table-bordered table-primary"
         id="expenseTable"
         data-cy="expense_list"
         v-if="expenses.items"
@@ -22,17 +22,19 @@
       </tr>
       </thead>
       <tbody>
+      <!--  Expenses with non-empty balances -->
       <tr
-          class="expenseRow expense_spent table-danger"
+          class="expenseRow expense_spent"
           v-for="expense in expenses.active"
           :key="expense.id"
       >
         <td data-cy="expense_name">{{ expense.name }}</td>
-        <td class="expenseAmount" data-cy="expense_amount">
+        <td class="expenseAmount" data-cy="expense_amount" :class="{'table-danger' : expense.balance < 0}">
           {{ expense.amount / 100 }} / {{ expense.balance / 100 }}
         </td>
         <td v-if="editable" v-b-modal="'planModalexpense'" @click="setData(expense)">...</td>
       </tr>
+      <!--  Expenses with empty balances -->
       <tr
           class="expenseRow expense_spent table-secondary"
           v-for="expense in expenses.spend"
@@ -82,9 +84,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-  .spend {
-    color: #ababab;
-  }
-</style>
