@@ -13,8 +13,6 @@
                       {{ transactionName(transaction)}}
                     </div>
                     <div class="transaction-amount" :class="getStyle(transaction.type)"><span v-if="transaction.type === 'income'">+</span>{{ transaction.amount | currency }}</div>
-
-
                   </div>
 
                   <div class="d-flex flex-row-reverse justify-content-between align-items-center">
@@ -26,7 +24,7 @@
                       <span v-if="transaction.account_receiver">{{ transaction.account_receiver.name }}</span>
                     </div>
 
-                    <div class="budgy-category omb-text-caption omb-color-secondary" v-if="transaction.type === 'expense'">{{ expenseName(transaction) }}</div>
+                    <div class="budgy-category omb-text-caption omb-color-secondary" v-if="transaction.type === 'expense' && expenses">{{ expenseName(transaction) }}</div>
 
                   </div>
                 </div>
@@ -49,8 +47,10 @@ export default {
     BudgyItemIcon
   },
   created() {
-    this.fetchData()
     this.$store.dispatch("setButtonState", {type: "add", status: true})
+  },
+  beforeMount() {
+    this.fetchData();
   },
   methods: {
     fetchData() {
@@ -129,7 +129,7 @@ export default {
     },
     expenseName(transaction) {
       if(transaction.expense){
-        return this.expenses.items[transaction.expense.id].name
+        return transaction.expense.name
       } else {
         return "со свободных"
       }
@@ -160,10 +160,6 @@ export default {
 
   a:hover {
     text-decoration: none;
-  }
-
-  .budgy-list-group {
-
   }
 
   #budgy-name {
