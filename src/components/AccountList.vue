@@ -1,26 +1,26 @@
 <template>
   <div>
-    <b-navbar toggleable="true" class="navbar navbar-dark bg-dark">
-      <b-navbar-brand>Счета</b-navbar-brand>
-      <b-navbar-toggle target="accountList" fixed></b-navbar-toggle>
-    </b-navbar>
+    <h2>Accounts</h2>
     <div>
-      <b-collapse cols="12" id="accountList">
+      <div id="accountList">
         <b-list-group id="accountTable" data-cy="account_list">
-          <div class="mt-3">Регулярные</div>
+
+          <div class="mt-3">Regular</div>
           <b-list-group-item class="d-flex justify-content-between align-items-center" v-for="account in accounts.regular" :key="account.id" :account="account">
             <div>
-              {{ account.name }}<b-badge v-if="account.currency" variant="warning" pill data-cy="account_amount" :style="{backgroundColor: account.currency.color}">{{ account.currency.code }}</b-badge>
+              <b-badge v-if="account.currency" variant="warning" pill data-cy="account_amount" :style="{backgroundColor: account.currency.color}">{{ account.currency.code }}</b-badge>
+              {{ account.name }}
             </div>
-            <b-badge variant="success" pill data-cy="account_amount">{{ account.balance / 100 }}</b-badge>
+            <div data-cy="account_amount"><b>{{ account.balance / 100 }}</b></div>
           </b-list-group-item>
-          <div class="mt-3">Накопления</div>
+
+          <div class="mt-3">Saving Accounts</div>
           <b-list-group-item class="d-flex justify-content-between align-items-center" v-for="account in accounts.saving" :key="account.id" :account="account">
             {{ account.name }}
             <b-badge variant="primary" pill data-cy="account_amount">{{ account.balance / 100 }}</b-badge>
           </b-list-group-item>
         </b-list-group>
-      </b-collapse>
+      </div>
     </div>
   </div>
 </template>

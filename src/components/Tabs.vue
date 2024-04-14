@@ -29,7 +29,7 @@ export default {
     },
     isActive(item) {
 
-      if(this.$route.name == item.name || item.active)
+      if(this.$route.name === item.name || item.active)
         return "active"
     },
     changeTab() {
@@ -46,14 +46,6 @@ export default {
 </script>
 
 <style scoped>
-  #menu-container {
-    /*background-color: #FF21A6;*/
-    height: 34px;
-    margin: 24px 0;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
   #menu-inner {
     visibility: visible;
     overflow-x: scroll;
@@ -64,41 +56,4 @@ export default {
     display: none;
   }
 
-  .period {
-    /*background-color: papayawhip;*/
-  }
-
-  .expenses {
-    /*background-color: #dc3848;*/
-    flex-grow: 0;
-  }
-
-  .incomes {
-    /*background-color: #3c97cf;*/
-  }
-
-  .savings {
-    /*background-color: darkmagenta;*/
-  }
-
-  .menu-item {
-    padding: 8px 12px;
-    margin-right: 4px;
-    font-weight: 500;
-    line-height: 18px;
-  }
-
-  .menu-item a {
-    color: black;
-    text-decoration: none;
-  }
-
-  .menu-item.active {
-    color: #FFFFFF;
-  }
-
-  .menu-item.active {
-    background-color: black;
-    border-radius: 16px;
-  }
 </style>

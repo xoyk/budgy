@@ -10,7 +10,7 @@
 
       <div class="omb-text-body">
         <router-link :to="{ name: 'period-create' }" rel="period-create">
-          <div class="no-link omb-color-primary">+ Новый период</div>
+          <div class="no-link omb-color-primary">+ New period</div>
         </router-link>
       </div>
 
@@ -22,13 +22,13 @@
 
     <div class="omb-margin-2 no-link" v-if="period.prev">
       <router-link :to="{ name: 'period', params: {periodId: period.prev.id}}" rel="prev">
-          Предыдущий ({{ period.prev.start_date + " - " + period.prev.end_date }})
+          Previous ({{ period.prev.start_date + " - " + period.prev.end_date }})
       </router-link>
     </div>
 
     <div class="omb-margin-2 no-link" v-if="period.next">
       <router-link :to="{ name: 'period', params: {periodId: period.next.id} }" rel="next">
-        Следующий  ({{ period.next.start_date + " - " + period.next.end_date }})
+        Next  ({{ period.next.start_date + " - " + period.next.end_date }})
       </router-link>
     </div>
   </div>

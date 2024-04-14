@@ -2,7 +2,7 @@
   <div>
     <Header></Header>
     <b-row no-gutters>
-      <b-col lg="4">
+      <b-col lg="8">
         <AccountList />
       </b-col>
     </b-row>
