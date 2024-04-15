@@ -11,7 +11,7 @@
               <b-badge v-if="account.currency" variant="warning" pill data-cy="account_amount" :style="{backgroundColor: account.currency.color}">{{ account.currency.code }}</b-badge>
               {{ account.name }}
             </div>
-            <div data-cy="account_amount"><b>{{ account.balance / 100 }}</b></div>
+            <AccountBalance :account="account"/>
           </b-list-group-item>
 
           <div class="mt-3">Saving Accounts</div>
@@ -26,10 +26,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import {mapState} from "vuex";
+import AccountBalance from "./AccountBalance";
 
 export default {
   name: "AccountList",
+  components: {AccountBalance},
   created() {
     this.$store.dispatch("fetchAccounts");
   },
@@ -39,4 +41,3 @@ export default {
 };
 </script>
 
-<style scoped></style>
