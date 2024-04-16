@@ -25,7 +25,7 @@ export default {
     formatCurrency(amount, currencyCode) {
       const rate = this.rates[currencyCode] || 1; // Fallback to 1 if rate not found
       const convertedAmount = amount * rate / 100;
-      return new Intl.NumberFormat('ru-RU', ).format(convertedAmount);
+      return new Intl.NumberFormat('ru-RU', {maximumFractionDigits: 2}).format(convertedAmount);
     },
   }
 }
