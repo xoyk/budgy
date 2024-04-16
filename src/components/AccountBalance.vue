@@ -1,8 +1,7 @@
 <template>
     <div data-cy="account_amount" class="align-right">
-      <div class="small">RUB {{ account.balance / 100 }}</div>
-      <div>
-        <b-badge variant="warning" pill>{{ formatCurrency(account.balance,account.currency.code) }}</b-badge>
+      <div class="omb_total">
+        {{ formatCurrency(account.balance,account.currency.code) }}
       </div>
     </div>
 </template>
@@ -25,13 +24,16 @@ export default {
   methods: {
     formatCurrency(amount, currencyCode) {
       const rate = this.rates[currencyCode] || 1; // Fallback to 1 if rate not found
-      const convertedAmount = amount * rate;
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode }).format(convertedAmount / 100);  // Assuming displaying in USD for simplicity
+      const convertedAmount = amount * rate / 100;
+      return new Intl.NumberFormat('ru-RU', ).format(convertedAmount);
     },
   }
 }
 </script>
 
 <style scoped>
-
+  .omb_total {
+    font-family: Abel, sans-serif;
+    font-weight: bold;
+  }
 </style>

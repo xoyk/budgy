@@ -8,10 +8,12 @@
           <div class="mt-3">Regular</div>
           <b-list-group-item class="d-flex justify-content-between align-items-center" v-for="account in accounts.regular" :key="account.id" :account="account">
             <div>
-              <b-badge v-if="account.currency" variant="warning" pill data-cy="account_amount" :style="{backgroundColor: account.currency.color}">{{ account.currency.code }}</b-badge>
               {{ account.name }}
             </div>
-            <AccountBalance :account="account"/>
+            <div class="d-flex justify-content-end align-items-center omb-total-block">
+              <AccountBalance :account="account"/>
+              <b-badge v-if="account.currency" variant="warning" pill data-cy="account_amount" :style="{backgroundColor: account.currency.color}">{{ account.currency.code }}</b-badge>
+            </div>
           </b-list-group-item>
 
           <div class="mt-3">Saving Accounts</div>
@@ -40,4 +42,10 @@ export default {
   }
 };
 </script>
+
+<style>
+  .omb-total-block {
+    column-gap: 10px;
+  }
+</style>
 
