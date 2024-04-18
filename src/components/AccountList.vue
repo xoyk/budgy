@@ -18,8 +18,13 @@
 
           <div class="mt-3">Saving Accounts</div>
           <b-list-group-item class="d-flex justify-content-between align-items-center" v-for="account in accounts.saving" :key="account.id" :account="account">
-            {{ account.name }}
-            <b-badge variant="primary" pill data-cy="account_amount">{{ account.balance / 100 }}</b-badge>
+            <div>
+              {{ account.name }}
+            </div>
+            <div class="d-flex justify-content-end align-items-center omb-total-block">
+              <AccountBalance :account="account"/>
+              <b-badge v-if="account.currency" variant="warning" pill data-cy="account_amount" :style="{backgroundColor: account.currency.color}">{{ account.currency.code }}</b-badge>
+            </div>
           </b-list-group-item>
         </b-list-group>
       </div>
