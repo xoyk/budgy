@@ -16,6 +16,7 @@ export default {
     return {
       rates: {
         "USD": 0.010526, // Conversion rate for USD (1/95)
+        "EUR": 0.010526, // Conversion rate for EUR (1/95)
         "AMD": 4,        // Conversion rate for AMD
         "RUB": 1         // Base currency, no conversion needed
       }
